@@ -66,3 +66,35 @@ target/
 
 # ipynb checkpoints
 .ipynb_checkpoints
+
+# VS-Code workspace
+*.code-workspace
+
+
+# Latex auxiliary files
+*.aux
+*.bcf
+*.log
+*.run.xml
+*.synctex.gz
+*.synctex(busy)
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.xdv
+*.out
+*-blx.bib
+*.ini
+*.ttt
+*.lomap
+*.efcodebox
+*.pygtex
+*.pygstyle
+*.listing
+*.pyg
+*.pdf
+
+*.png
+*.jpg
+*.ttf
