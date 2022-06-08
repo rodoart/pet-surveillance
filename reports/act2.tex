@@ -1,44 +1,222 @@
-\documentclass[12pt,twocolumn,a4paper]{articuloAPA}
+\documentclass[12pt,a4paper]{articuloAPA}
 %------------------------------------------------------------------------------%
 % INFORMACIÓN DEL ARTÍCULO Y METADATOS                                         %
 %------------------------------------------------------------------------------%
 \firstauthor{Rodolfo Arturo González Trillo}
 \secondauthor{Jorge Castañeda Méndez}
 \thirdauthor{Carlos Oswaldo Alfaro Rodríguez}
-\teacher{M. en T.A. Carlos Santiago Cruz}
-\course{Razonamiento y planificación automática}
-\activity{Resolución de un problema mediante búsqueda heurística}
-\assignment{2}
+
+\university{Universidad Internacional de La Rioja}
+\school{Escuela Superior de Ingeniería y Tecnología}
+\master{Maestría en Inteligencia Artificial}
 \title{Resolución de un problema mediante búsqueda heurística}
 \keywords{ia, unir}
 \date{\today}
 %------------------------------------------------------------------------------%
 
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+
 %------------------------------------------------------------------------------%
 % Página de Título                                                             %
 %------------------------------------------------------------------------------%
-\twocolumn[
-  \begin{@twocolumnfalse}
-    \maketitle
-  \end{@twocolumnfalse}
-]
+\maketitle
+
+%------------------------------------------------------------------------------%
+% Índice de contenidos                                                         %
+%------------------------------------------------------------------------------%
+\tableofcontents
+
 %------------------------------------------------------------------------------%
 \section{Introducción}
 %------------------------------------------------------------------------------%
+
+Texto Normal del menú de estilos.
+
+La primera sección es siempre una introducción. En la introducción se debe resumir de forma esquemática pero suficientemente clara lo esencial de cada una de las partes del trabajo. La lectura de esta primera sección ha de dar una idea clara de lo que se pretende realizar y resolver, las conclusiones a las que se ha llegado y del procedimiento seguido.
+
+Como tal, es una de las secciones más importantes del documento. Las ideas principales a transmitir son la identificación del problema a tratar, la justificación de su importancia, los objetivos generales a grandes rasgos y un adelanto de la contribución que esperas hacer \parencite{rialland2021}.
+
+Típicamente una introducción tiene tres partes:
+
+\begin{itemize}
+  \item Motivación / justificación del tema a tratar.
+  \item Objetivos del trabajo.
+  \item Estructura en secciones del trabajo
+\end{itemize}
+
 
 $$
 x = \frac{y^2 + 3z}{\sqrt{58}}
 $$
 
 
+\subsection{Justificación del Trabajo}
+
+¿Cuál es el problema que quieres tratar?
+
+¿Cuáles crees que son las causas?
+
+¿Por qué es relevante el problema?
+
+
+\subsection{Estructura en secciones}
+
+Aquí se describe brevemente lo que se va a contar en cada una de las secciones siguientes.
+
+%------------------------------------------------------------------------------%
+\section{Objetivos}
+%------------------------------------------------------------------------------%
+
+Esta sección es el puente entre el estudio del dominio y la contribución a realizar. 
+
+Hay que definir el Objetivo Geneal (resumido en un par de líneas y explicar el qué, para qué y cómo se va a desarrollar la propuesta) y los Objetivos Específicos (suelen ser explicaciones de los diferentes pasos a seguir en la consecución del objetivo general)
+
+Para realizar este apartado, podrás apoyarte en los principios MELDS.
+
+
+%------------------------------------------------------------------------------%
+\section{Desarollo conceptual}
+%------------------------------------------------------------------------------%
+
+
+En este capítulo debes desarrollar el proceso de idear una solución para la necesidad que has detectado. Para ello, seguirás el proceso de _Design Thinking_ recogido en el temario. A continuación, te presentamos la estructura habitual, aunque suele ser común desarrollar los apartados en función de las fases o actividades que se hayan establecido en la metodología de trabajo. No es necesario que realices la parte de testeo.
+
+\begin{itemize}
+  \item Empatizar
+  \item Definir
+  \item Investigación de antecedentes
+  \item Idear
+  \item Prototipar: Cual será el prototipo que vas a utilizar
+  \item Selección de prototipos y criterio para hacerlo  
+\end{itemize}
+
+
+\begin{quotebox}
+  Este apartado corresponde al entregable de la asignatura titulado: \textbf{Design Thinking}.
+\end{quotebox}
+
+
+%------------------------------------------------------------------------------%
+\section{Metodología}
+%------------------------------------------------------------------------------%
+
+Describir usando las metodologías Ágil SCRUM y LEAN cual es la metodología de trabajo que se ha seguido. En él se debe especificar, entre otras cosas, lo siguiente:
+
+\begin{itemize}
+  \item Los roles dentro de la metodología SCRUM
+  \item ¿Cómo se van a realizar los \textit{sprints}, con que periodicidad?
+  \item Listado inicial de historias
+  \item ¿Qué herramientas se van a usar para la gestión de las historias?
+  \item ¿Cuál es el criterio que se va a seguir para establecer los puntos de esfuerzo?
+  \item Define como se van a medir los resultadosSelección de prototipos y criterio para hacerlo  
+\end{itemize}
+
+\begin{quotebox}
+  Este apartado corresponde al entregable de la asignatura titulado: \textbf{SCRUM Y LEAN}.
+\end{quotebox}
+
+%------------------------------------------------------------------------------%
+\section{Implementación de la propuesta}
+%------------------------------------------------------------------------------%
+
+La implementación debe describir cómo se llevaría a cabo la aplicación de tu propuesta de innovación en el mundo empresarial. Si crees necesario añadir o variar las secciones, puedes hacerlo libremente.
+
+\subsection{Planificación y estimación}
+
+Cómo se llevaría a cabo la implementación. Que herramientas, tecnologías, origen de datos, arquitectura software y hardware se necesita.
+
+\begin{quotebox}
+  Opcionalmente puedes entregar un prototipo de la implementación. En caso de que exista el prototipo deberá estar accesible en repositorio público y deberá incluirse el enlace en la presente sección.
+\end{quotebox}
+
+\subsection{Despliegue}
+
+Plan de despliegue del proyecto. 
+
+\begin{itemize}
+  \item ¿Cómo se va a desplegar?
+  \item Plan de contingencias en el despliegue
+  \item Securización y protección de datos (si fuera necesario)
+  \item Herramientas utilizadas para el despliegue
+  \item Configuración de los diferentes entornos de desarrollo y producción que necesites
+\end{itemize}
+
+\subsection{Mantenimiento}
+
+Plan de mantenimiento previsto. 
+
+\begin{itemize}
+  \item ¿Qué cambios habría que hacer?
+  \item ¿Cuál será el ciclo de vida estimado del proyecto?  
+\end{itemize}
+
+
+%------------------------------------------------------------------------------%
+\section{Validación y diseño experimental}
+%------------------------------------------------------------------------------%
+
+Basándote en la definición de \textit{Minimun Viable Product} y a los criterios de medición que has definido en la sección 4 bajo la metodología \textit{LEAN Startup}, define cual será el criterio final para la validación de tu diseño innovador. 
+
+
+%------------------------------------------------------------------------------%
+\section{Conclusiones y trabajo futuro}
+%------------------------------------------------------------------------------%
+
+En este apartado tendrás que exponer las conclusiones y lineas futuras que de esta propuesta de innovación puedan derivarse.
+
+Lo siguiente no tiene nada que ver con la estructura, si no con el formato. 
+
+A continuación, se indica con un ejemplo cómo deben introducirse los títulos y las fuentes en Tablas y Figura. Nota que no se introducen del mismo modo en ambos tipos de recursos.
+
+Ejemplo de nota al pie\footnote[1]{Ejemplo de nota al pie.}
+
 Probando \textlf{Hola Mundo}
 
 
-%\twocolumn[\begin{@twocolumnfalse}
-  \addcontentsline{toc}{section}{Referencias}
-  \printbibliography
-%\end{@twocolumnfalse}]
+\begin{figure}
+  \centering
+  \caption[Proceso de percepción de objetos.]{Ejemplo del un árbol de decisión, para decidir qué tipo de carro es el correcto para cada cliente. Cada hoja o nodo representa una variable, las ramas representan el umbral de decisión o la variable a elegir.}
+  \includegraphics[width=0.5\columnwidth]{logovertical.png}
+  \source{Obtenido de \figurecite{NuevoLaredo2021}.}
+  \label{fig:logovertical}
+\end{figure}
+
+\begin{table}
+  \caption{Atributos y técnicas más frecuentemente usados en algunos modelos de predicción de caída de lluvia}
+  \label{tab:atributos}
+  \centering
+  \begin{tabular}{p{0.2\tablelength}p{0.2\tablelength}p{0.4\tablelength}p{0.4\tablelength}p{0.8\tablelength}}
+    \toprule
+    Regiones & Périodo & Técnica & Evaluación & Variables predictoras \\
+    \midrule
+    Local, Regional, nacional. 
+    & Anual, Mensual, semanal 
+    & Redes Neuronales, \textit{ARIMA}, Árboles de decisión, Medias móviles, \textit{ABFNN}, $k$-media
+    & RMSE, MAE, MSE, Coeficiente de Pearson 
+    & Cantidad media de lluvia, Mínimo y Máximo de temperatura, Velocidad del viento, latitud y longitud, presión atmósferica, humedad, radación solar, evaporación.\\	  
+    \bottomrule
+  \end{tabular}
+  \source{Versión resumida de \figurecite{poornima2019}.}
+\end{table}
+
+%------------------------------------------------------------------------------%
+\section{Conclusiones y trabajo futuro}
+%------------------------------------------------------------------------------%
+
+Suele empezar con un resumen del problema tratado, de cómo se ha abordado y de por qué la solución sería válida. Es recomendable que incluya también un resumen de las contribuciones del trabajo, en el que relaciones las contribuciones y los resultados obtenidos con los objetivos que habías planteado para el trabajo, discutiendo hasta qué punto has conseguido resolver los objetivos planteados.
+
+Finalmente, se suele dedicar unos últimos párrafos a hablar de líneas de trabajo futuro que podrían aportar valor añadido al trabajo. La sección debería señalar las perspectivas de futuro que abre el trabajo desarrollado para el campo de estudio definido. En el fondo, debes justificar de qué modo puede emplearse la aportación que has desarrollado y en qué campos.
+
+
+
+%------------------------------------------------------------------------------%
+\addcontentsline{toc}{section}{Referencias bibliográficas}
+\printbibliography[title=Referencias bibliográficas]
+%------------------------------------------------------------------------------%
 \end{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

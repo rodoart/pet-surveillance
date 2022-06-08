@@ -35,7 +35,6 @@
 }%
 \NewDocumentCommand{\secondauthor}{m}{\newcommand{\atsecondauthor}{#1}}
 \NewDocumentCommand{\thirdauthor}{m}{\newcommand{\atthirdauthor}{#1}}
-\NewDocumentCommand{\teacher}{m}{\newcommand{\atteacher}{#1}}
 
 \DeclareDocumentCommand{\title}{m}{%
   \hypersetup{pdftitle={#1}}
@@ -48,19 +47,19 @@
   \renewcommand{\@date}{#1}
 }%
 
+\NewDocumentCommand{\university}{m}{\newcommand{\atuniversity}{#1}}
+\NewDocumentCommand{\school}{m}{\newcommand{\atschool}{#1}}
 
-\NewDocumentCommand{\course}{m}{%
+\NewDocumentCommand{\master}{m}{%
   \hypersetup{pdfsubject={#1}}
-  \newcommand{\atcourse}{#1}
+  \newcommand{\atmaster}{#1}
 }%
 
-\NewDocumentCommand{\activity}{m}{\newcommand{\atactivity}{#1}}
 
 \NewDocumentCommand{\keywords}{m}{%
   \hypersetup{pdfkeywords={#1}}
   \newcommand{\atkeywords}{#1}
 }%
-\NewDocumentCommand{\assignment}{m}{\newcommand{\atassignment}{#1}}
 
     
 %------------------------------------------------------------------------------%
@@ -121,8 +120,16 @@
 %------------------------------------------------------------------------------%
 \RequirePackage{setspace}
 
+% Force tuo use 12 pt font:
+\makeatletter
+%\input{size11.clo}
+\input{size12.clo}
+\makeatother
+
 % Spacing
 \onehalfspacing
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0em}
 
 \RequirePackage[left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
 
@@ -131,6 +138,9 @@
 
 % To impede overfull hboxes
 \setlength{\emergencystretch}{10pt}
+
+
+
 %------------------------------------------------------------------------------%
 %                                    COLORS                                    %
 %------------------------------------------------------------------------------%
@@ -156,6 +166,7 @@
 \definecolor{myhibiscus}{RGB}{196,65,107}
 
 \definecolor{mylightgray}{RGB}{231,230,230}
+\definecolor{mydarkgray}{RGB}{89,89,89}
 
 
 
@@ -343,17 +354,32 @@
 \graphicspath{{figures/}{./}{../figures/}}
 
 % Sources bellow captions.
-\newcommand{\source}[1]{\vspace{-8pt} \caption*{ \textbf{Fuente:} {#1}} }
-\captionsetup{justification=centerlast, font=small, labelfont=bf}
+\newcommand{\source}[1]{
+  \vspace{-8pt} \caption*{\color{mydarkgray}\footnotesize\normalfont Fuente: {#1}} 
+}
+
+\captionsetup{justification=centerlast, font=normalsize, labelfont=bf, labelsep=period}
+
+\DeclareCaptionFormat{custom}
+{%
+    {\normalsize\textbf{#1#2} \textit{#3}}
+}
+\captionsetup{format=custom}
+
+
+
+% Format for cite at figures
+\newcommand{\figurecite}[1]{{\color{aqua}\protect\citeauthor{#1},} \protect\citeyear{#1}}
+
+
 
 % New command for a rule to be used under captions.
-\newcommand{\decoRule}[1]{\rule{#1}{.4pt}} 
+%\newcommand{\decoRule}[1]{\rule{#1}{.4pt}} 
 
 %------------------------------------------------------------------------------%
 %                                  TABLES                                      %
 %------------------------------------------------------------------------------%
 \RequirePackage{tabulary}
-\RequirePackage[flushleft]{threeparttable}
 % Cambio de nombre:
 \addto\captionsspanish{
 \def\listtablename{\'Indice de tablas}%
@@ -368,18 +394,40 @@
 %------------------------------------------------------------------------------%
 \RequirePackage{fancyhdr}
 \RequirePackage{multirow}
+\RequirePackage{anyfontsize}
 \pagestyle{fancy}
 \fancyhf{}
-\chead{\footnotesize \atactivity}
+
+\rhead{\textlf{\fontsize{10pt}{10pt}\selectfont \attitle \\ \vspace{3pt}
+  \atfirstauthor \\
+  \atsecondauthor \\
+  \atthirdauthor \\
+}}% 
 \rfoot{\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0pt}
+%\renewcommand{\footrulewidth}{0.4pt}
 
 \fancypagestyle{noheader}{
    \fancyhead{}
-   \renewcommand{\headrule}{\hrule height 0pt \vspace{0mm}\hrule height 0pt}
+   \renewcommand{\headrule}{}%{\hrule height 0pt \vspace{0mm}\hrule height 0pt}
 }
 
+
+%------------------------------------------------------------------------------%
+%                       SECTION AND SUBSECTION FORMAT                          %
+%------------------------------------------------------------------------------%
+\RequirePackage{titlesec}
+\RequirePackage{anyfontsize}
+
+\titleformat{\section}
+  {\sffamily\fontsize{18pt}{27pt}\selectfont\color{aqua}}{\thesection.}{6pt}{}
+
+\titlespacing{\section}{0pt}{0pt}{6pt}
+
+\titleformat{\subsection}
+  {\sffamily\fontsize{14pt}{21pt}\selectfont\color{aqua}}{\thesubsection.}{6pt}{} 
+
+\titlespacing{\subsection}{0pt}{6pt}{6pt}
 %------------------------------------------------------------------------------%
 %                                 TITLE PAGE                                   %
 %------------------------------------------------------------------------------%
@@ -398,7 +446,7 @@
         opacityback=0,
         opacityframe=0,
         width=0.99\textwidth,
-        height=0.99\textheight,
+        height=0.90\textheight,
         left={\dimexpr0.495\textwidth-0.35\paperwidth\relax},
         right={\dimexpr0.495\textwidth-0.35\paperwidth\relax},
         halign=flush center,
@@ -410,14 +458,14 @@
       \includegraphics[height=2.9cm]{logo_internet.png}\\
       \vspace{0.5cm}
       
-      \textlf{\fontsize{24pt}{0pt}\selectfont Universidad Internacional de La Rioja}\\
+      \textlf{\fontsize{24pt}{0pt}\selectfont \atuniversity}\\
       \vspace{0.2cm}
       % Escuela
-      \textlf{\fontsize{20pt}{0pt}\selectfont Escuela Superior de Ingeniería y Tecnología}\\
+      \textlf{\fontsize{20pt}{0pt}\selectfont \atschool}\\
       
       \vspace{4cm}
       % Maestría 
-      \textlf{\fontsize{18pt}{0pt}\selectfont Maestría en Inteligencia Artificial}\\
+      \textlf{\fontsize{18pt}{0pt}\selectfont \atmaster}\\
      
       % Título
       \begin{tcolorbox}[
@@ -438,7 +486,7 @@
         \attitle
       \end{tcolorbox}
 
-      \vspace{6.7cm}
+      \vspace{6.0cm}
       
       %  Alumnos y fecha
       \begin{center}
@@ -457,12 +505,12 @@
       \end{center}
 
     \end{tcolorbox}
-    \clearpage
-    \newpage
-    \mbox{}
-    \clearpage
-    \newpage
-    \cleardoublepage 
+    %\clearpage
+    %\newpage
+    %\mbox{}
+    %\clearpage
+    %\newpage
+    %\cleardoublepage 
 
   \end{titlepage}
 }
@@ -490,6 +538,8 @@
 \newlength\inwd
 \setlength\inwd{0.75cm}
 \newcounter{ipythcntr}
+
+% Boxes for code.
 
 \tcbset{
   ipynb/.style={
@@ -669,5 +719,21 @@
       #2
     \end{commentb}
   },
+  #1,
+}
+
+
+% Box for quotes:
+
+
+\newtcolorbox{quotebox}[1][]{
+  enhanced,
+  frame hidden,          
+  halign=flush center,
+  arc=0pt,
+  outer arc=0pt,
+  colback=aqua3,
+  borderline north={0.5pt}{0pt}{aqua},
+  borderline south={0.5pt}{0pt}{aqua},
   #1,
 }
