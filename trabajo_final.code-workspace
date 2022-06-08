@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+
+	"settings": {
+		"editor.wordWrap": "wordWrapColumn",
+		"debug.console.wordWrap": false,
+		"python.pythonPath": "${env:CONDA_HOME}/envs/{ cookiecutter.project_slug }/python"
+	}
+}
