@@ -3,8 +3,8 @@
 % INFORMACIÓN DEL ARTÍCULO Y METADATOS                                         %
 %------------------------------------------------------------------------------%
 \firstauthor{Rodolfo Arturo González Trillo}
-\secondauthor{Jorge Castañeda Méndez}
-\thirdauthor{Carlos Oswaldo Alfaro Rodríguez}
+\secondauthor{Carlos Oswaldo Alfaro Rodríguez}
+\thirdauthor{}%Jorge Castañeda Méndez
 
 \university{Universidad Internacional de La Rioja}
 \school{Escuela Superior de Ingeniería y Tecnología}
@@ -30,6 +30,7 @@
 % Índice de contenidos                                                         %
 %------------------------------------------------------------------------------%
 \tableofcontents
+\pagebreak
 
 %------------------------------------------------------------------------------%
 \section{Introducción}
@@ -179,16 +180,16 @@ Probando \textlf{Hola Mundo}
 
 
 \begin{figure}
+  \label{fig:logovertical}
   \centering
   \caption[Proceso de percepción de objetos.]{Ejemplo del un árbol de decisión, para decidir qué tipo de carro es el correcto para cada cliente. Cada hoja o nodo representa una variable, las ramas representan el umbral de decisión o la variable a elegir.}
   \includegraphics[width=0.5\columnwidth]{logovertical.png}
   \source{Obtenido de \figurecite{NuevoLaredo2021}.}
-  \label{fig:logovertical}
 \end{figure}
 
 \begin{table}
-  \caption{Atributos y técnicas más frecuentemente usados en algunos modelos de predicción de caída de lluvia}
   \label{tab:atributos}
+  \caption{Atributos y técnicas más frecuentemente usados en algunos modelos de predicción de caída de lluvia}
   \centering
   \begin{tabular}{p{0.2\tablelength}p{0.2\tablelength}p{0.4\tablelength}p{0.4\tablelength}p{0.8\tablelength}}
     \toprule
@@ -203,6 +204,21 @@ Probando \textlf{Hola Mundo}
   \end{tabular}
   \source{Versión resumida de \figurecite{poornima2019}.}
 \end{table}
+
+
+\begin{listing}[!ht]
+  \label{listing:2}
+  \caption{Hello World in C} 
+  \vspace{-5pt}
+  \begin{minted}{c}
+  #include <stdio.h>
+  int main() {
+    printf("Hello, World!"); /*printf() outputs the quoted string*/
+    return 0;
+  }
+  \end{minted}
+  %\source{Obtenido de \figurecite{poore2021}.}
+\end{listing}
 
 %------------------------------------------------------------------------------%
 \section{Conclusiones y trabajo futuro}

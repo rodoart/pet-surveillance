@@ -355,7 +355,8 @@
 
 % Sources bellow captions.
 \newcommand{\source}[1]{
-  \vspace{-8pt} \caption*{\color{mydarkgray}\footnotesize\normalfont Fuente: {#1}} 
+  \vspace{-8pt} \caption*{\color{mydarkgray}\footnotesize\normalfont Fuente: {#1}}
+  \vspace{10pt} 
 }
 
 \captionsetup{justification=centerlast, font=normalsize, labelfont=bf, labelsep=period}
@@ -363,6 +364,7 @@
 \DeclareCaptionFormat{custom}
 {%
     {\normalsize\textbf{#1#2} \textit{#3}}
+    \vspace{-10pt}
 }
 \captionsetup{format=custom}
 
@@ -401,7 +403,7 @@
 \rhead{\textlf{\fontsize{10pt}{10pt}\selectfont \attitle \\ \vspace{3pt}
   \atfirstauthor \\
   \atsecondauthor \\
-  \atthirdauthor \\
+  %\atthirdauthor \\
 }}% 
 \rfoot{\thepage}
 \renewcommand{\headrulewidth}{0pt}
@@ -428,6 +430,16 @@
   {\sffamily\fontsize{14pt}{21pt}\selectfont\color{aqua}}{\thesubsection.}{6pt}{} 
 
 \titlespacing{\subsection}{0pt}{6pt}{6pt}
+
+%------------------------------------------------------------------------------%
+%                              TABLE OF CONTENTS                               %
+%------------------------------------------------------------------------------%
+\addto\captionsspanish{% Replace "english" with the language you use
+  \renewcommand{\contentsname}%
+    {Índice de contenidos}%
+}
+
+
 %------------------------------------------------------------------------------%
 %                                 TITLE PAGE                                   %
 %------------------------------------------------------------------------------%
@@ -497,7 +509,7 @@
          \arrayrulecolor{mylightgray}\specialrule{0.5pt}{0pt}{0pt}
          \multirow{3}{8.1cm}{Trabajo de innovación presentado por:} &      \atfirstauthor \\ 
          & \atsecondauthor \\ 
-         & \atthirdauthor \\ 
+         %& \atthirdauthor \\ 
          \arrayrulecolor{mylightgray}\specialrule{0.5pt}{0pt}{0pt}
          Fecha: & \atdate \\ 
          \arrayrulecolor{mylightgray}\specialrule{0.5pt}{0pt}{0pt}
@@ -529,201 +541,27 @@
 \renewcommand{\labelitemi}{$\textcolor{aqua}{\bullet}$}
 
 %------------------------------------------------------------------------------%
-%                                  CODE BOXES                                  %
+%                              CODE ENVIRONMENTS                               %
+%------------------------------------------------------------------------------%
+\RequirePackage{minted}
+
+\usemintedstyle{friendly}
+\setminted{bgcolor=aqua3}
+\setminted{breaklines=true}
+\setminted{fontsize=\small}
+
+\RequirePackage{float}
+\floatstyle{plaintop}
+\restylefloat{listing}
+
+\renewcommand{\listingscaption}{Código}
+
+
+%------------------------------------------------------------------------------%
+%                                  QUOTE BOX                                   %
 %------------------------------------------------------------------------------%
 \RequirePackage{tcolorbox}
-\tcbuselibrary{minted, most}
-
-% the space reserved between for the ``In'' numbers and the code
-\newlength\inwd
-\setlength\inwd{0.75cm}
-\newcounter{ipythcntr}
-
-% Boxes for code.
-
-\tcbset{
-  ipynb/.style={
-    enlarge left by=\inwd,
-    width=\linewidth-\inwd,
-    enhanced,
-    top=0pt,
-    bottom=0pt,
-    left=0pt,
-    right=0pt,
-  }
-}
-
-\tcbset{
-  ipynbbox/.style={
-    sharp corners,
-    boxrule=0.4pt,
-    colback=aqua3,
-    frame hidden,
-    %colframe=aqua,
-  }
-}
-
-\tcbset{
-  ipynboverlayin/.style={
-    overlay={
-      \node[
-        anchor=north east,
-        text width=\inwd,
-        font=\small\color{aqua},
-        inner ysep=6pt,
-        inner xsep=0pt,
-        outer sep=0pt
-      ] 
-      at (frame.north west)
-      {[\theipythcntr]:};
-    },
-  },
-}
-
-\tcbset{
-  ipynbminted/.style={
-    listing only,
-    listing engine=minted,
-    minted language=python,
-    minted style=friendly,
-    minted options={
-      fontsize=\scriptsize,
-      breaklines=true
-    }, 
-  },
-}
-
-\newtcblisting[use counter=ipythcntr, number format=\arabic]{ipynbin}[1][]{
-  ipynb,
-  ipynbbox,
-  ipynboverlayin,
-  ipynbminted,
-  #1,
-}
-
-\newtcblisting{ipynbincont}[2][]{
-  ipynb,
-  ipynbbox,
-  overlay={
-      \node[
-        anchor=north east,
-        text width=\inwd,
-        font=\small\color{aqua},
-        inner ysep=6pt,
-        inner xsep=0pt,
-        outer sep=0pt
-      ] 
-      at (frame.north west)
-      {
-        [\arabic{ipythcntr}#2]: \\
-        \vspace{-7pt}{\centering\tiny \textit{cont.}}\\
-      };
-    },
-  ipynbminted,
-  #1,
-}
-
-
-
-\tcbset{
-  ipynboverlayout/.style={
-    overlay={
-      \node[
-        anchor=north east,
-        text width=\inwd,
-        font=\small\color{mydarkgreen},
-        inner ysep=4pt,
-        inner xsep=0pt,
-        outer sep=0pt
-      ] 
-      at (frame.north west)
-      {[\arabic{ipythcntr}]:};
-    },
-  },
- }
-
-\tcbset{
-  ipynbnobox/.style={
-    standard jigsaw,
-    opacityback=0,
-    frame hidden,
-  },
-}
-
-\newtcolorbox{ipynboutnocode}[1][]{
-  ipynbnobox,
-  ipynb,
-  ipynboverlayout,
-  top=-3pt,
-  fontupper=\scriptsize\ttfamily,
-  #1, 
-}
-
-\newtcblisting{ipynbout}[1][]{
-  ipynbnobox,
-  ipynb,
-  ipynboverlayout,
-  top=-3pt,
-  fontupper=\scriptsize\ttfamily,
-  listing only,
-  listing engine=minted,
-  minted language=text,
-  minted options={
-    fontsize=\scriptsize,
-    breaklines=true
-  },
-  #1, 
-}
-
-\RequirePackage{setspace}
-\renewcommand{\baselinestretch}{1.5}
-\newtcolorbox{commentb}{%
-  ipynbnobox, 
-  ipynb,
-  left=-4pt,
-  fontupper={\small\linespread{0.66}\selectfont}
-}
-
-\newtcblisting[use counter=ipythcntr, number format=\arabic]{ipynbincommented}[2][]{
-  ipynb,
-  ipynbbox,
-  ipynboverlayin,
-  ipynbminted,
-  listing above comment,
-  middle=0pt,
-  comment={
-    \begin{commentb}
-      #2
-    \end{commentb}
-  },
-  #1,
-}
-
-\newtcblisting{ipynboutcommented}[2][]{
-  ipynbnobox,
-  ipynb,
-  ipynboverlayout,
-  top=-3pt,
-  fontupper=\scriptsize\ttfamily,
-  listing only,
-  listing engine=minted,
-  minted language=text,
-  minted options={
-    fontsize=\scriptsize,
-    breaklines=true
-  },
-  listing above comment,
-  middle=0pt,
-  comment={
-    \begin{commentb}
-      #2
-    \end{commentb}
-  },
-  #1,
-}
-
-
-% Box for quotes:
+\tcbuselibrary{most}
 
 
 \newtcolorbox{quotebox}[1][]{
