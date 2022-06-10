@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ArticuloAPA                                                                  %
+% Proyecto de Innovación                                                       %
 % Class File                                                                   %
-% Version 1.5 (17/july/2021)                                                   %
+% Version 1.5 (9/june/2022)                                                   %
 %                                                                              %
 % Authors:                                                                     %
 % Rodolfo Arturo González Trillo                                               %
@@ -16,7 +16,7 @@
 %------------------------------------------------------------------------------%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{articuloAPA}[2021/07/14 My custom article class whith APA]
+\ProvidesClass{proyectoinnovacion}[2022/06/09 My custom article class whith APA]
 
 % Load article
 \providecommand{\baseclass}{article}
