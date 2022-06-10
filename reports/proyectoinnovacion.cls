@@ -438,6 +438,7 @@
 \RequirePackage{tocloft}
 
 
+% Title
 \addto\captionsspanish{% Replace "english" with the language you use
   \renewcommand{\contentsname}%
     {Índice de contenidos}%
@@ -447,11 +448,16 @@
 
 
 % Fonts
-\renewcommand{\cftsecfont}{\fontsize{12pt}{18pt}\selectfont\bfseries}
-\renewcommand{\cftsubsecfont}{\fontsize{12pt}{18pt}\selectfont}
+\renewcommand{\cftsecfont}{\fontsize{12pt}{18pt}\selectfont}
+\renewcommand{\cftsubsecfont}{\fontsize{12pt}{18pt}\selectfont\sffamily}
 
 % Dots
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} 
+
+% Dot after number
+
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
 
 
 %------------------------------------------------------------------------------%
