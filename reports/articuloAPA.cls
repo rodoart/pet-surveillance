@@ -507,7 +507,7 @@
                         !{\color{mylightgray}\VRule[0.5pt]}p{6.7cm}
                         !{\color{mylightgray}\VRule[0.5pt]}}
          \arrayrulecolor{mylightgray}\specialrule{0.5pt}{0pt}{0pt}
-         \multirow{3}{8.1cm}{Trabajo de innovación presentado por:} &      \atfirstauthor \\ 
+         \multirow{2}{8.1cm}{Trabajo de innovación presentado por:} &      \atfirstauthor \\ 
          & \atsecondauthor \\ 
          %& \atthirdauthor \\ 
          \arrayrulecolor{mylightgray}\specialrule{0.5pt}{0pt}{0pt}
