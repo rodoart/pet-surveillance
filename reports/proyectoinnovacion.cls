@@ -434,10 +434,24 @@
 %------------------------------------------------------------------------------%
 %                              TABLE OF CONTENTS                               %
 %------------------------------------------------------------------------------%
+\RequirePackage{anyfontsize}
+\RequirePackage{tocloft}
+
+
 \addto\captionsspanish{% Replace "english" with the language you use
   \renewcommand{\contentsname}%
     {Índice de contenidos}%
 }
+
+\renewcommand{\cfttoctitlefont}{\sffamily\fontsize{18pt}{27pt}\selectfont\color{aqua}}
+
+
+% Fonts
+\renewcommand{\cftsecfont}{\fontsize{12pt}{18pt}\selectfont\bfseries}
+\renewcommand{\cftsubsecfont}{\fontsize{12pt}{18pt}\selectfont}
+
+% Dots
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} 
 
 
 %------------------------------------------------------------------------------%
