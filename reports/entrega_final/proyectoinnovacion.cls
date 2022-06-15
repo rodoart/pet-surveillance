@@ -71,13 +71,13 @@
 \RequirePackage{amsmath}
 \RequirePackage{unicode-math}
 
-\setmainfont[Path=fonts/,
+\setmainfont[Path=../fonts/,
   BoldItalicFont  = calibriz.ttf,
   BoldFont        = calibrib.ttf,
   ItalicFont      = calibrii.ttf
 ]{calibri.ttf}
 
-\setsansfont[Path=fonts/,
+\setsansfont[Path=../fonts/,
   BoldItalicFont  = calibrii.ttf,
   BoldFont        = calibri.ttf,
   ItalicFont      = calibrili.ttf]{calibril.ttf}
@@ -87,12 +87,12 @@
 \defaultfontfeatures{Scale=MatchUppercase}
 \setmathfont{FiraMath-Regular.otf}
 
-\setmathfont[Path=fonts/,
+\setmathfont[Path=../fonts/,
   range={up,"002B,"002D,`±,`×,`·,`÷,`¬,`∂,`∆,`∕,`∞,`⌐}]{calibri.ttf}
 \setmathfont[range={\nabla}]{XITSMath-Regular.otf}
-\setmathfont[Path=fonts/, range=it]{calibrii.ttf}
-\setmathfont[Path=fonts/, range=bfup]{calibrib.ttf}
-\setmathfont[Path=fonts/, range=bfit]{calibriz.ttf}
+\setmathfont[Path=../fonts/, range=it]{calibrii.ttf}
+\setmathfont[Path=../fonts/, range=bfup]{calibrib.ttf}
+\setmathfont[Path=../fonts/, range=bfit]{calibriz.ttf}
 
 \RequirePackage[babel]{csquotes}
 
@@ -202,7 +202,7 @@
   doi=true,
   natbib=true
   ]{biblatex}%
-\addbibresource{../references/biblography.bib}
+\addbibresource{../../references/biblography.bib}
 
 \DeclareDelimFormat*{finalnamedelim}
   {\ifnum\value{liststop}>2 \finalandcomma\fi\addspace{y}\space}
