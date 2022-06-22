@@ -431,6 +431,12 @@
 
 \titlespacing{\subsection}{0pt}{6pt}{6pt}
 
+
+\titleformat{\subsubsection}
+  {\sffamily\fontsize{12pt}{18pt}\selectfont\color{aqua}}{\thesubsubsection.}{6pt}{} 
+
+  \titlespacing{\subsubsection}{0pt}{3pt}{3pt}
+
 %------------------------------------------------------------------------------%
 %                              TABLE OF CONTENTS                               %
 %------------------------------------------------------------------------------%
