@@ -1,6 +1,6 @@
 # conda env create --file environment.yml
 # mamba env create --file environment.yml
-name: trabajo_final
+name: vigilancia_mascotas
 channels:
   - anaconda
   - conda-forge
@@ -25,10 +25,9 @@ dependencies:
   - pylint
   - pyprojroot
   - pyspark
-  - python=3.9.6
+  - python=3.6.8
   - python-dotenv
   - scikit-learn
   - seaborn
   - statsmodels
-  - tensorflow
   
