@@ -8,6 +8,9 @@
 - [Image segmentation tutorial](https://divamgupta.com/image-segmentation/2019/06/06/deep-learning-semantic-segmentation-keras.html)
 
 
+
+
+
 # Datasets de interiores
 
 - [https://interiornet.org/](https://interiornet.org/)
