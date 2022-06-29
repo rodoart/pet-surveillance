@@ -68,10 +68,17 @@ def is_valid(
     non empty directory
     """
     if exists(path) and not isfile(path):
+        
+        files = listdir(path)
 
         # Checking if the directory is empty or not
-        if  len(listdir(path))!=0:
-            return True
+        if  len(files)!=0:
+            files = [file_name for file_name in files if not file_name.endswith('.ini')]
+
+            if len(files)!=0:
+                return True
+            else:
+                return False
         else:
             return False
     
