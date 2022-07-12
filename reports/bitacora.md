@@ -27,3 +27,12 @@ Hoy voy a tratar de entrenar a una red neuornal con imágenes de habitaciones cr
 - <https://resources.unity.com/ai-ml-content/sample-home-datasets>
 
 
+# 2-julio-2022
+
+Se realizó un diagrama con el procesamiento del video, esta pendiente completar las fases de desarrollo, entrenamiento, y despliegue.
+
+Se están evaluando distintas redes neuronales preentrenadas para la segmentación semántica.
+
+
+
+

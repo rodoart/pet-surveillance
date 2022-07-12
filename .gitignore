@@ -101,5 +101,7 @@ target/
 *.ttf
 *.docx
 *.gdoc
+*.psd
+*.drawio
 
 /tmp/
