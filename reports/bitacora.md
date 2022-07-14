@@ -28,10 +28,20 @@ Hoy voy a tratar de entrenar a una red neuornal con imágenes de habitaciones cr
 
 
 # 2-julio-2022
+***Autor: Rodolfo***
 
 Se realizó un diagrama con el procesamiento del video, esta pendiente completar las fases de desarrollo, entrenamiento, y despliegue.
 
 Se están evaluando distintas redes neuronales preentrenadas para la segmentación semántica.
+
+# 13-julio-2022
+***Autor: Rodolfo***
+
+Se creo un prototipo animado mediante un gif del resultado final.
+Se creo un modulo make_dataset para la descarga y ordenamiento de los datos de entrenamiento y validación.
+
+
+
 
 
 

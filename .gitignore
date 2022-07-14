@@ -103,5 +103,8 @@ target/
 *.gdoc
 *.psd
 *.drawio
+*.dtmp
 
 /tmp/
+/reports/desing_thinking/prototipo/
+*.svg
