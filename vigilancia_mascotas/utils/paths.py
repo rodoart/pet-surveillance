@@ -6,8 +6,8 @@ from typing import (
 from xmlrpc.client import Boolean
 
 def make_dir_function(
-    dir_name= '',
-    workspace=''
+    dir_name:str  = '',
+    workspace:str =''
 ) -> Callable[..., Path]:
     """Generate a function that converts a string or iterable of strings into
     a path relative to the project directory.
@@ -152,7 +152,7 @@ def make_remote_copy_of_workspace_functions(
                 ' remote folder')
 
     
-    return local_dir, update_from_remote, update_to_remote, update_notebook
+    return local_dir, remote_dir, update_from_remote, update_to_remote, update_notebook
 
 
 

@@ -41,6 +41,28 @@ Se creo un prototipo animado mediante un gif del resultado final.
 Se creo un modulo make_dataset para la descarga y ordenamiento de los datos de entrenamiento y validación.
 
 
+# 14-julio-2022
+***Autor: Rodolfo***
+
+En el archivo `0.1-vigilancia_mascotas-semantic_semantic_segmentation_test_with_room_data.ipynb` se probaron con las imágenes del dataset [de interiores](https://resources.unity.com/ai-ml-content/sample-home-datasets) tres redes neuronales preentrenadas de segmentación automática:
+
+- pspnet_50_ADE_20K
+- pspnet_101_cityscapes
+- pspnet_101_voc12
+
+Se determinó que la mejor para este proyecto es pspnet_101_voc12, pues aún sin hacer ajustes tiene una precisión mean_IU bastante elevada (0.043). 
+
+También se hizo un modulo `make_dataset` que automáticamente descarga y ordena este dataset, para futuras pruebas.
+
+# 15-julio-2022
+***Autor: Rodolfo***
+
+Se descubrió un problema con las imágenes "labels" del dataset unity, las imágenes no estaban correctamente formateadas. Se deben formatear de forma correcta y reiniciar las pruebas.
+
+
+
+
+
 
 
 
