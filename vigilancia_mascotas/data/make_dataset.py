@@ -43,12 +43,13 @@ class DataDownload():
 
     def __init__(
         self, 
-        workspace:Path = ''
+        local_workspace:Path = '',
+        remote_workspace:Path = '',
     ) -> None:  
         """
         Args:
 
-            workspace(Path): Project root path. It must be provided if you are working from a folder other than the root or from a notebook.
+            local_workspace(Path): Project root path. It must be provided if you are working from a folder other than the root or from a notebook.
         
         """  
         self.file_name = "Unity_Residential_Interiors.zip"
@@ -58,7 +59,8 @@ class DataDownload():
                               + f"residential/{self.file_name}"
 
 
-        self.__workspace = workspace
+        self.__local_workspace = local_workspace
+        self.__remote_workspace = remote_workspace
 
         ## Zip related paths
         self.zip_destiny_path = self.__local_dir('tmp', self.file_name)
@@ -70,7 +72,7 @@ class DataDownload():
                                              'unity_residential_interiors')
 
         ### Paths before moving.
-        self.tmp_images_dir = self.unzip_path.joinpath(
+        self.tmp_images_dir = self.unzip_path.local.joinpath(
             'Residential Interiors Dataset',
             'RGB2d9da855-d495-4bd9-9a1f-6744db5a3249')
 
@@ -79,8 +81,8 @@ class DataDownload():
         )
 
         ### Paths after moving
-        self.raw_images_dir = self.dataset_path.joinpath('images')
-        self.raw_labels_dir = self.dataset_path.joinpath('labels')
+        self.raw_images_dir = self.dataset_path.local.joinpath('images')
+        self.raw_labels_dir = self.dataset_path.local.joinpath('labels')
 
         ## Path for train and validation sub sets.
         self.dataset_processed_path = self.__local_dir(
@@ -88,18 +90,20 @@ class DataDownload():
             'unity_residential_interiors')
 
     def __local_dir(self, *args):
-        local_dir = paths.make_dir_function(workspace=self.__workspace)
+        local_dir = paths.make_two_dir_function(
+            local_workspace=self.__local_workspace,
+            remote_workspace=self.__remote_workspace)
         return local_dir(*args)
 
 
     def donwload_zip_file(self) -> None:
-        """ Downloads the zip file from self.url_dataset_zip in self.zip_destiny_path.
+        """ Downloads the zip file from self.url_dataset_zip in self.zip_destiny_path.local.
         """
-        if not self.zip_destiny_path.is_file():
-            self.zip_destiny_path.parent.mkdir(exist_ok=True)
+        if not self.zip_destiny_path.local.is_file():
+            self.zip_destiny_path.local.parent.mkdir(exist_ok=True)
             response = get(self.url_dataset_zip, stream=True)
 
-            with open(self.zip_destiny_path, "wb") as f:
+            with open(self.zip_destiny_path.local, "wb") as f:
                 for chunk in response.iter_content(chunk_size=1024): 
                     if chunk: # filter out keep-alive new chunks
                         f.write(chunk)
@@ -114,19 +118,19 @@ class DataDownload():
 
     def unzip_files(self) -> None:
         """
-        Unzip the downloaded files at self.unzip_path. Should be runned after `donwload_zip_file`.
+        Unzip the downloaded files at self.unzip_path.local. Should be runned after `donwload_zip_file`.
         """
 
-        if not paths.is_valid(self.unzip_path):
-            with ZipFile(self.zip_destiny_path, 'r') as zip_ref:
-                zip_ref.extractall(self.unzip_path)
+        if not paths.is_valid(self.unzip_path.local):
+            with ZipFile(self.zip_destiny_path.local, 'r') as zip_ref:
+                zip_ref.extractall(self.unzip_path.local)
             
             print(f"{self.file_name} has been unzipped to the directory "\
-                +f"{self.unzip_path.relative_to(self.__local_dir())}!")
+                +f"{self.unzip_path.relative}!")
 
         else:
             print("The directory "\
-                +f"{self.unzip_path.relative_to(self.__local_dir())} already "\
+                +f"{self.unzip_path.relative} already "\
                 + "exists and isn't empty!")
                 
         
@@ -136,10 +140,10 @@ class DataDownload():
         
         '''
 
-        makedirs(self.dataset_path, exist_ok=True)
+        makedirs(self.dataset_path.local, exist_ok=True)
 
         for source, destiny in zip([self.tmp_images_dir, self.tmp_labels_dir], 
-                                [self.raw_images_dir, self.raw_labels_dir]):
+                                [self.raw_images_dir, self.raw_images_dir]):
         
             if not paths.is_valid(destiny):
                 move(
@@ -156,11 +160,11 @@ class DataDownload():
         Fixes a problem with the labeling of the dataset whose format is not compatible with the functions of the tensorflow-segmentation library.
         '''
 
-        file_names = [name for name in listdir(self.raw_labels_dir) 
+        file_names = [name for name in listdir(self.raw_images_dir) 
                       if name.endswith('.png')]
 
         for file_name in file_names:
-            file_path = self.raw_labels_dir.joinpath(file_name)
+            file_path = self.raw_images_dir.joinpath(file_name)
             img = image_preprocessing.correct_labels(cv2.imread(str(file_path)))
 
             cv2.imwrite(str(file_path), img)         
@@ -188,30 +192,30 @@ class DataDownload():
 
     def move_files_to_train_and_validation_folders(self) -> None:
         """
-        Move to separate training and test directories in labels and images in self.dataset_processed_path. 
+        Move to separate training and test directories in labels and images in self.dataset_processed_path.local. 
         """
 
-        if paths.is_valid(self.dataset_processed_path):
+        if paths.is_valid(self.dataset_processed_path.local):
             print("The directory "\
-                +f"{self.dataset_processed_path.relative_to(self.__local_dir())}"\
+                +f"{self.dataset_processed_path.local.relative_to(self.__local_dir())}"\
                 + " already existed and isn't empty!")
             
             return None
         
 
         train_names, val_names = self.create_train_validation_names_list()    
-        self.dataset_processed_path.mkdir(parents=True, exist_ok=True)
+        self.dataset_processed_path.local.mkdir(parents=True, exist_ok=True)
 
         for set_name, file_names in zip(['train', 'val'], [train_names, val_names]):
             for set_type, name_prefix in zip(['images', 'labels'], 
                                             ['rgb', 'segmentation']):
                 for file_name in file_names:
-                    destiny_path = self.dataset_processed_path.joinpath(
+                    destiny_path = self.dataset_processed_path.local.joinpath(
                         f'{set_name}_{set_type}',
                         f'{file_name}.png'
                     )
 
-                    origin_path = self.dataset_path.joinpath(
+                    origin_path = self.dataset_path.local.joinpath(
                         set_type, f'{name_prefix}_{file_name}.png'
                     )
 
@@ -234,13 +238,17 @@ class DataDownload():
 
         """
         if overwrite:
-            if self.zip_destiny_path.is_file():
-                remove(self.zip_destiny_path)
+            if self.zip_destiny_path.local.is_file():
+                remove(self.zip_destiny_path.local)
 
-            for path in [self.unzip_path, self.dataset_path, 
-                         self.dataset_processed_path]:
+            for path in [self.unzip_path.local, self.dataset_path.local, 
+                         self.dataset_processed_path.local]:
                 if path.is_dir():
                     rmtree(path)
+
+
+        if self.__remote_workspace:
+            pass
              
         self.donwload_zip_file()
         self.unzip_files()

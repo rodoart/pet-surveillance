@@ -1,9 +1,17 @@
-from ast import Str
 from pathlib import Path
 from typing import (
     Callable
 )
-from xmlrpc.client import Boolean
+
+from shutil import copyfile
+from distutils.dir_util import copy_tree, mkpath
+from os import name
+from pathlib import Path, WindowsPath, PosixPath
+
+from warnings import warn
+
+
+
 
 def make_dir_function(
     dir_name:str  = '',
@@ -86,78 +94,113 @@ def is_valid(
         return False
 
 
+if name == 'posix':
+    _base = PosixPath
+else:
+    _base = WindowsPath
 
-from typing import (Callable, Sequence)
-from distutils.dir_util import copy_tree
-from os import listdir
-from shutil import copy
+class RelativePath(_base):
+    def __init__(self, workspace, *args) -> None:                             
+        super().__init__()
+        self.workspace = workspace
 
-
-def make_remote_copy_of_workspace_functions(
-    local_path = '',
-    remote_path = '', 
-    notebook_path = '',
-) -> Sequence[Callable[... , None]]:
-    '''
-    Generates functions to generate updates to files from another folder on the 
-    same machine to the folder where this notebook is located, following the 
-    project structure. 
-    A different path can be specified for the current notebook folder.
-
-    Args:
-        remote_path:
-        notebook_path:
+    def is_valid(self):
+        return is_valid(self)
         
-    '''
+
+class TwoWorkspacePath():     
+
+    def __init__(self, *args, local_workspace, remote_workspace='') -> None:
+        self.__args = args
+        self.local = local_workspace   
+        self.remote = remote_workspace
+
+    @property
+    def local(self):
+        return self.__local        
+
+    @local.setter
+    def local(self, workspace):
+        if type(workspace) == str:
+            workspace =  Path(workspace).resolve()   
+
+        self.__local = RelativePath(workspace, *self.__args)
 
 
-
-    local_dir = make_dir_function(workspace=local_path)
-    remote_dir = make_dir_function(workspace = remote_path)
-
-    def update_from_remote(): 
-        if local_dir() != remote_dir() and is_valid(remote_dir()):
-            copy_tree(str(remote_dir()), str(local_dir()))
-            print('The remote files have been copied to the local repository.')
+    @property
+    def remote(self):
         
-        else:
-            print('There is no need to copy the remote files, '+
-                  'as the remote repository does not exist or is empty.')
+        return self.__remote
 
-    def update_to_remote():
-        if local_dir() == remote_dir():
+    @remote.setter
+    def remote(self, workspace):
+        
+        if not workspace:
+            self.__remote = ''
             return None
 
-        exception_list = ['notebooks',  '.config', '.git', 'sample_data' ]
-       
-        local_file_names = listdir(local_dir())
-        for name in local_file_names:
-            if (local_dir(name).is_dir() and name not in exception_list):
-                copy_tree(str(local_dir(name)),
-                        str(remote_dir(name)))
-    
-
-    def update_notebook(to_remote=False):
-        if not notebook_path:
-            return None
-    
-        file_path = Path(notebook_path).resolve()
-
-        if to_remote:
-            copy(file_path, remote_dir('notebooks', file_path.name))
-        else:
-            copy(local_dir('notebooks', file_path.name), file_path)            
         
-        print(f'The notebook {file_path.name} has been updated in the' + 
-                ' remote folder')
+        if type(workspace) == str:
+            workspace =  Path(workspace).resolve()   
 
+        self.__remote = RelativePath(workspace, *self.__args)
+
+        return None
+
+    @property
+    def relative(self):
+        return self.local.relative_to(self.local.workspace)
+
+
+    def copy_to(self, destiny):
+        if not self.remote:
+            warn('No remote directory provided so files cannot be copied.')
+            return None
+
+        if destiny == 'remote':
+            src = self.local
+            dst = self.remote
+        else:
+            src = self.remote
+            dst = self.local
+
+        if not dst.parent.is_dir():
+            mkpath(str(dst.parent))
+
+        if src.is_file():          
+            copyfile(src, dst)
+        elif src.is_dir():
+            copy_tree(src, dst)
+
+    def upload(self):
+        self.copy_to('remote')
     
-    return local_dir, remote_dir, update_from_remote, update_to_remote, update_notebook
+    def download(self):
+        self.copy_to('local')
 
+    def copy(self):
+        return TwoWorkspacePath(
+            local_workspace = self.local.workspace,
+            remote_workspace = self.remote.workspace,
+            *self.__args
+        )
 
+    def joinpath(self, *path_labels):
+        twp = self.copy()
+        twp.__local = twp.__local.joinpath(*path_labels)
+        twp.__remote = twp.__remote.joinpath(*path_labels)
+        
+        return twp
 
+    def __str__(self):
+        return str(self.relative)
 
-
+def make_two_dir_function(local_workspace, remote_workspace=''):
+    def fun(*args):
+        return TwoWorkspacePath(*args, local_workspace=local_workspace,
+                         remote_workspace=remote_workspace)
+    
+    return fun
 
         
 
