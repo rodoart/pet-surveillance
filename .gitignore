@@ -104,6 +104,8 @@ target/
 *.psd
 *.drawio
 *.dtmp
+*.xlsx
+*.gif
 
 /tmp/
 /reports/desing_thinking/prototipo/
