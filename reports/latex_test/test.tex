@@ -1,0 +1,17 @@
+\documentclass{article}
+ \usepackage{array,multirow,graphicx}
+ \usepackage{float}
+ \begin{document}
+ \begin{table}[H]
+ \centering
+ \begin{tabular}{l|r|r|r|r|c|}
+ \hline
+ & \multicolumn{1}{c|}{Text} & \multicolumn{1}{c|}{Text} & \multicolumn{1}{c|}{Text} & \multicolumn{1}{c|}{Text} & \multicolumn{1}{c|}{text}\\
+ \hline
+  text &&&&& \parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{270}{\section{rota}}}}\\
+  text &&&&& \\
+  text &&&&& \\
+ \hline
+ \end{tabular}
+ \end{table}
+ \end{document}
