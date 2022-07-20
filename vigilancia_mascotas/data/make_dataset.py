@@ -143,7 +143,7 @@ class DataDownload():
         makedirs(self.dataset_path.local, exist_ok=True)
 
         for source, destiny in zip([self.tmp_images_dir, self.tmp_labels_dir], 
-                                [self.raw_images_dir, self.raw_images_dir]):
+                                [self.raw_images_dir, self.raw_labels_dir]):
         
             if not paths.is_valid(destiny):
                 move(
@@ -160,11 +160,11 @@ class DataDownload():
         Fixes a problem with the labeling of the dataset whose format is not compatible with the functions of the tensorflow-segmentation library.
         '''
 
-        file_names = [name for name in listdir(self.raw_images_dir) 
+        file_names = [name for name in listdir(self.raw_labels_dir) 
                       if name.endswith('.png')]
 
         for file_name in file_names:
-            file_path = self.raw_images_dir.joinpath(file_name)
+            file_path = self.raw_labels_dir.joinpath(file_name)
             img = image_preprocessing.correct_labels(cv2.imread(str(file_path)))
 
             cv2.imwrite(str(file_path), img)         
@@ -247,14 +247,15 @@ class DataDownload():
                     rmtree(path)
 
 
-        if self.__remote_workspace:
-            pass
-             
-        self.donwload_zip_file()
-        self.unzip_files()
-        self.move_files()
-        self.correct_label_images()
-        self.move_files_to_train_and_validation_folders()
+        if self.__remote_workspace and \
+            self.dataset_processed_path.remote.is_dir():
+            self.dataset_processed_path.download()
+        else:          
+            self.donwload_zip_file()
+            self.unzip_files()
+            self.move_files()
+            self.correct_label_images()
+            self.move_files_to_train_and_validation_folders()
 
 
 

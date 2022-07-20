@@ -168,9 +168,9 @@ class TwoWorkspacePath():
             mkpath(str(dst.parent))
 
         if src.is_file():          
-            copyfile(src, dst)
+            copyfile(str(src), str(dst))
         elif src.is_dir():
-            copy_tree(src, dst)
+            copy_tree(src = str(src), dst = str(dst))
 
     def upload(self):
         self.copy_to('remote')

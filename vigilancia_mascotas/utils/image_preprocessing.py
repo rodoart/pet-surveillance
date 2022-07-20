@@ -21,7 +21,7 @@ def correct_labels(
     for k,color in enumerate(unique_colors):
         img_reshaped[img_reshaped == color] = k
     
-    return img_reshaped.reshape(img.shape)
+    return img_reshaped.reshape(img.shape)[:,:,1]
             
     
 

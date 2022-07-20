@@ -1,16 +1,11 @@
-from vigilancia_mascotas.utils.paths import TwoWorkspacePath
+from regex import D
+from vigilancia_mascotas.data.make_dataset import DataDownload
 
-if __name__ == '__main__':
+dd = DataDownload()
+#dd.unzip_files()
+dd.move_files()
+dd.correct_label_images()
+dd.move_files_to_train_and_validation_folders()
 
-    #dd = make.DataDownload()
-    REMOTE_PATH = '..\\remote_example'
-    LOCAL_PATH = '.'
 
-    twp = TwoWorkspacePath(
-        'data', 'raw', 'semantic_segmentation', 'unity_residential_interiors', 'images', 'rgb_4.png' , 
-        local_workspace = LOCAL_PATH,
-        remote_workspace = REMOTE_PATH
-    )
-    twp_2 = twp.joinpath('hola')
 
-    print(twp_2)
