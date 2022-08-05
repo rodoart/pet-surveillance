@@ -1,0 +1,5 @@
+outs:
+- md5: ef8cf345c4de95d9ca64825c8bf81a6a.dir
+  size: 28543975
+  nfiles: 102
+  path: val_images

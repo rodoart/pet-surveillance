@@ -1,0 +1,5 @@
+outs:
+- md5: edca314c1df1ddf9de4c6dce26c8bd37.dir
+  size: 528720
+  nfiles: 102
+  path: val_segmentation

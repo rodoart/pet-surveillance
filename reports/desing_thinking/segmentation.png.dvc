@@ -1,0 +1,4 @@
+outs:
+- md5: afe7e26f5bd1d60a75b9d5e803af9db2
+  size: 68230
+  path: segmentation.png

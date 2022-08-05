@@ -108,10 +108,10 @@ target/
 
 
 /tmp/
-/reports/desing_thinking/prototipo/
 /models/
 
-
+*.jpg
+*.gif
 *.svg
 *.json
 

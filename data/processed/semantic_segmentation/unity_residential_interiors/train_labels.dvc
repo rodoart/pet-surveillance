@@ -1,0 +1,5 @@
+outs:
+- md5: 9cb990347f1fa66de5e34249cb6d622c.dir
+  size: 17867233
+  nfiles: 701
+  path: train_labels

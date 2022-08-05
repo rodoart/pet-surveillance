@@ -1,0 +1,5 @@
+outs:
+- md5: a2052ec68c40874eccff2a4a1b660eaf.dir
+  size: 7778353
+  nfiles: 301
+  path: val_labels

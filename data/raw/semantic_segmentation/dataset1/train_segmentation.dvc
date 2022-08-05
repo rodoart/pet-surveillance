@@ -1,0 +1,5 @@
+outs:
+- md5: d990a9586e11a88572030d7a0400a5d9.dir
+  size: 2160563
+  nfiles: 368
+  path: train_segmentation
