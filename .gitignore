@@ -111,3 +111,5 @@ target/
 /reports/desing_thinking/prototipo/
 /models/
 *.svg
+
+/semantic-segmentation/
