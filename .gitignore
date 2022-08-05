@@ -62,7 +62,7 @@ target/
 .python-version
 
 # exclude data from source control by default
-*.png
+/data/
 
 # ipynb checkpoints
 .ipynb_checkpoints
@@ -107,9 +107,7 @@ target/
 *.xlsx
 *.gif
 
+
 /tmp/
 /reports/desing_thinking/prototipo/
-/models/
 *.svg
-
-/semantic-segmentation/
