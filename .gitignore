@@ -62,7 +62,6 @@ target/
 .python-version
 
 # exclude data from source control by default
-/data/
 
 # ipynb checkpoints
 .ipynb_checkpoints
@@ -110,4 +109,15 @@ target/
 
 /tmp/
 /reports/desing_thinking/prototipo/
+/models/
+
+
 *.svg
+*.json
+
+
+# DVC
+data/processed/unity_residential_interiors
+data/raw/unity_residential_interiors
+data/raw/dataset1
+
