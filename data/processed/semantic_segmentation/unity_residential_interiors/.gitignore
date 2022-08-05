@@ -2,3 +2,4 @@
 /train_labels
 /val_images
 /val_labels
+/segformer_predicted_val_images

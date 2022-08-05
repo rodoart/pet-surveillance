@@ -1,0 +1,5 @@
+outs:
+- md5: ad678d5d3a69189d2ff94b4ced0e0b22.dir
+  size: 1808867
+  nfiles: 300
+  path: segformer_predicted_val_images
