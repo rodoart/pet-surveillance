@@ -124,11 +124,11 @@ class DataDownload():
                 zip_ref.extractall(self.unzip_path)
             
             print(f"{self.file_name} has been unzipped to the directory "\
-                +f"{self.unzip_path.relative}!")
+                +f"{self.unzip_path}!")
 
         else:
             print("The directory "\
-                +f"{self.unzip_path.relative} already "\
+                +f"{self.unzip_path} already "\
                 + "exists and isn't empty!")
                 
         
