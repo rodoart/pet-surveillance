@@ -150,7 +150,7 @@ class DataDownload():
                 )
 
         
-        print(f"The files have been moved or already exist.")
+        print(f"The files have been moved or already exists.")
 
 
     def correct_label_images(self) -> None:

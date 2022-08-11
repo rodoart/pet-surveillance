@@ -121,3 +121,7 @@ data/processed/unity_residential_interiors
 data/raw/unity_residential_interiors
 data/raw/dataset1
 
+
+# Virtual Environment
+/.venv/
+
