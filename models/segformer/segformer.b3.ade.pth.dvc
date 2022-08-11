@@ -1,0 +1,4 @@
+outs:
+- md5: 3279c1a9805f82b81f94c5a5fee28d1c
+  size: 189538089
+  path: segformer.b3.ade.pth

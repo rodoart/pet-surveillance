@@ -108,7 +108,9 @@ target/
 
 
 /tmp/
-/models/
+
+# Models
+*.pth
 
 *.jpg
 *.gif
