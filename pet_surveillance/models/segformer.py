@@ -7,9 +7,12 @@ from torchvision import io
 from torchvision import transforms as T
 from PIL import Image
 from pathlib import Path
+import numpy as np
 
 import subprocess
 import sys
+
+from typing import Union
 
 
 local_dir = make_dir_function()
@@ -18,7 +21,7 @@ git_url = 'https://github.com/sithu31296/semantic-segmentation'
 
 
 
-def _download_library():
+def _download_library() -> None:
     """
     For some mysterious reason, the Semsec library, available on GitHub, cannot be loaded if installed directly from requirements.txt, it has to be downloaded in order to be used.
     """
@@ -27,7 +30,7 @@ def _download_library():
 
 
 
-def _install_library():
+def _install_library() -> None :
     assert is_valid(repo_dir)
 
     python = sys.executable
@@ -62,12 +65,12 @@ class Segformer():
         self._load_model()
 
 
-    def _download_model(self):
+    def _download_model(self)-> None:
         self.model_dir.mkdir(exist_ok=True, parents=True)
         gdown.download(self.model_url, str(self.segformer_path), quiet=False)
 
 
-    def _load_model(self):
+    def _load_model(self) -> None:
 
         model = eval('SegFormer')(
             backbone='MiT-B3',
@@ -86,14 +89,14 @@ class Segformer():
         print('Loaded Model')
 
 
-    def _load_image(self, image_path):
+    def _load_image(self, image_path:Union[str,Path])-> torch.Tensor:
         image = io.read_image(str(image_path))
         if str(image_path).endswith('png'):
             image = image[:3,:,:]
         
         return image
 
-    def _preprocess_image(self, image):
+    def _preprocess_image(self, image:torch.Tensor) -> torch.Tensor:
         # resize
         image_ = T.Resize((512, 512))(image)
         # scale to [0.0, 1.0]
@@ -105,7 +108,7 @@ class Segformer():
 
         return image_
 
-    def _inference(self, image):  
+    def _inference(self, image:torch.Tensor) -> torch.Tensor:  
         with torch.inference_mode():
             seg = self.model(image)
 
@@ -115,18 +118,51 @@ class Segformer():
         return seg_map
 
 
-    def _show_image(self, image):
+    def _show_image(self, image: torch.Tensor) -> Image.Image:
         if image.shape[2] != 3: image = image.permute(1, 2, 0)
         image = Image.fromarray(image.numpy())
         return image
 
 
-    def predict_labels(self, image_path):
+    def predict_labels(
+        self, image_path:Union[str,Path], labels_path:Union[str,Path]
+    ) -> Image.Image:
+
+        if type(labels_path) == str:
+            labels_path = Path(labels_path)            
+        
+        
         image = self._load_image(image_path)
         image = self._preprocess_image(image)
         labels = self._inference(image)
         img_labels = self._show_image(labels)
+        
+        labels_path.parent.mkdir(exist_ok=True, parents=True)
+        img_labels.save(str(labels_path))
+
         return img_labels
+
+    def detect_floor(self, labels:Union[str,Path, Image.Image])->np.array:
+        
+        if type(labels) in [str, Path]:
+            img  = Image.open(labels)
+        else:
+            img = labels
+
+        img = np.asarray(img)
+        colors = np.unique(img.reshape(-1, img.shape[2]), axis=0)
+        floor_color = colors[3]
+
+        indices = np.where(np.all(img == floor_color, axis=-1))
+
+        mask = np.zeros(img.shape[:-1], bool)
+
+        mask[indices] = True
+
+        return mask
+        
+
+    
 
 
   
