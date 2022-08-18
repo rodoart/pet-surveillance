@@ -23,7 +23,7 @@ git_url = 'https://github.com/sithu31296/semantic-segmentation'
 
 def _download_library() -> None:
     """
-    For some mysterious reason, the Semsec library, available on GitHub, cannot be loaded if installed directly from requirements.txt, it has to be downloaded in order to be used.
+    For some mysterious reason, the Semsec library, available on GitHub, cannot be loaded if installed directly from requirements.txt, it has to be downloaded locally in order to be used.
     """
     repo_dir.parent.mkdir(exist_ok=True, parents=True)
     Repo.clone_from(git_url, repo_dir)
@@ -109,10 +109,14 @@ class Segformer():
         return image_
 
     def _inference(self, image:torch.Tensor) -> torch.Tensor:  
+
+        # Forward
         with torch.inference_mode():
             seg = self.model(image)
 
+        # Prediction
         seg = seg.softmax(1).argmax(1).to(int) 
+        # recolor
         seg_map = palette[seg].squeeze().to(torch.uint8)
 
         return seg_map

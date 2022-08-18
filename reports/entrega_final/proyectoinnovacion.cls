@@ -82,7 +82,11 @@
   BoldFont        = calibri.ttf,
   ItalicFont      = calibrili.ttf]{calibril.ttf}
 
-\setmonofont{Consolas}
+
+\setmonofont[Path=../fonts/,
+  BoldItalicFont  = consolaz.ttf,
+  BoldFont        = consolab.ttf,
+  ItalicFont      = consolai.ttf]{consola.ttf}
 
 \defaultfontfeatures{Scale=MatchUppercase}
 \setmathfont{FiraMath-Regular.otf}
@@ -200,9 +204,11 @@
   isbn=true,
   url=true,
   doi=true,
-  natbib=true
+  natbib=true,
+  citestyle=authoryear
   ]{biblatex}%
 \addbibresource{../../references/biblography.bib}
+
 
 \DeclareDelimFormat*{finalnamedelim}
   {\ifnum\value{liststop}>2 \finalandcomma\fi\addspace{y}\space}

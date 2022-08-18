@@ -127,3 +127,6 @@ data/raw/dataset1
 # Virtual Environment
 /.venv/
 
+# Latex
+/.texlive/
+
