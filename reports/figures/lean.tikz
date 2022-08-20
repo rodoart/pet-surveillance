@@ -1,0 +1,78 @@
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,399); %set diagram left start at 0, and has height of 399
+
+%Flowchart: Connector [id:dp6671534120935239] 
+\draw  [color={rgb, 255:red, 0; green, 152; blue, 205 }  ,draw opacity=1 ][line width=3.75]  (192.38,68.52) .. controls (192.38,42.62) and (213.38,21.62) .. (239.29,21.62) .. controls (265.19,21.62) and (286.19,42.62) .. (286.19,68.52) .. controls (286.19,94.42) and (265.19,115.42) .. (239.29,115.42) .. controls (213.38,115.42) and (192.38,94.42) .. (192.38,68.52) -- cycle ;
+%Flowchart: Connector [id:dp9742464437933368] 
+\draw  [color={rgb, 255:red, 0; green, 168; blue, 207 }  ,draw opacity=1 ][line width=3.75]  (313.27,68.54) .. controls (313.27,42.64) and (334.27,21.64) .. (360.17,21.64) .. controls (386.08,21.64) and (407.07,42.64) .. (407.07,68.54) .. controls (407.07,94.45) and (386.08,115.44) .. (360.17,115.44) .. controls (334.27,115.44) and (313.27,94.45) .. (313.27,68.54) -- cycle ;
+%Flowchart: Connector [id:dp17986667998434147] 
+\draw  [color={rgb, 255:red, 0; green, 182; blue, 197 }  ,draw opacity=1 ][line width=3.75]  (388.63,163.07) .. controls (388.63,137.17) and (409.63,116.17) .. (435.53,116.17) .. controls (461.43,116.17) and (482.43,137.17) .. (482.43,163.07) .. controls (482.43,188.97) and (461.43,209.97) .. (435.53,209.97) .. controls (409.63,209.97) and (388.63,188.97) .. (388.63,163.07) -- cycle ;
+%Flowchart: Connector [id:dp49064716171042055] 
+\draw  [color={rgb, 255:red, 0; green, 195; blue, 176 }  ,draw opacity=1 ][line width=3.75]  (361.7,280.92) .. controls (361.7,255.02) and (382.7,234.02) .. (408.6,234.02) .. controls (434.51,234.02) and (455.5,255.02) .. (455.5,280.92) .. controls (455.5,306.83) and (434.51,327.83) .. (408.6,327.83) .. controls (382.7,327.83) and (361.7,306.83) .. (361.7,280.92) -- cycle ;
+%Flowchart: Connector [id:dp4374690028497701] 
+\draw  [color={rgb, 255:red, 4; green, 205; blue, 147 }  ,draw opacity=1 ][line width=3.75]  (252.78,333.35) .. controls (252.78,307.45) and (273.77,286.45) .. (299.68,286.45) .. controls (325.58,286.45) and (346.58,307.45) .. (346.58,333.35) .. controls (346.58,359.26) and (325.58,380.25) .. (299.68,380.25) .. controls (273.77,380.25) and (252.78,359.26) .. (252.78,333.35) -- cycle ;
+%Flowchart: Connector [id:dp9167083401815027] 
+\draw  [color={rgb, 255:red, 109; green, 212; blue, 114 }  ,draw opacity=1 ][line width=3.75]  (143.87,280.88) .. controls (143.87,254.98) and (164.87,233.98) .. (190.77,233.98) .. controls (216.67,233.98) and (237.67,254.98) .. (237.67,280.88) .. controls (237.67,306.78) and (216.67,327.78) .. (190.77,327.78) .. controls (164.87,327.78) and (143.87,306.78) .. (143.87,280.88) -- cycle ;
+%Flowchart: Connector [id:dp24671509877720965] 
+\draw  [color={rgb, 255:red, 169; green, 215; blue, 83 }  ,draw opacity=1 ][line width=3.75]  (116.99,163.02) .. controls (116.99,137.12) and (137.99,116.12) .. (163.89,116.12) .. controls (189.8,116.12) and (210.79,137.12) .. (210.79,163.02) .. controls (210.79,188.92) and (189.8,209.92) .. (163.89,209.92) .. controls (137.99,209.92) and (116.99,188.92) .. (116.99,163.02) -- cycle ;
+
+% Text Node
+\draw (239.29,68.52) node   [align=left] {\begin{minipage}[lt]{54.92pt}\setlength\topsep{0pt}
+\begin{center}
+1. Eiminar\\despilfarro
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (360.17,68.54) node   [align=left] {\begin{minipage}[lt]{58.29pt}\setlength\topsep{0pt}
+\begin{center}
+2. \\Amplificar el\\aprendizaje
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (435.53,163.07) node   [align=left] {\begin{minipage}[lt]{57.75pt}\setlength\topsep{0pt}
+\begin{center}
+3. Posponer\\decisiones
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (408.6,280.92) node   [align=left] {\begin{minipage}[lt]{48.68pt}\setlength\topsep{0pt}
+\begin{center}
+4. Liberar \\pronto
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (299.68,333.35) node   [align=left] {\begin{minipage}[lt]{53.21pt}\setlength\topsep{0pt}
+\begin{center}
+5.\\Empoderar\\al equipo
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (190.77,280.88) node   [align=left] {\begin{minipage}[lt]{46.95pt}\setlength\topsep{0pt}
+\begin{center}
+6.\\Construir \\calidad
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (163.89,163.02) node   [align=left] {\begin{minipage}[lt]{57.15pt}\setlength\topsep{0pt}
+\begin{center}
+7.\\Optimizar el\\sistema
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (299.7,194.04) node  [font=\large] [align=left] {\begin{minipage}[lt]{55.79pt}\setlength\topsep{0pt}
+Principios
+\begin{center}
+LEAN
+\end{center}
+
+\end{minipage}};
+
+
+\end{tikzpicture}
