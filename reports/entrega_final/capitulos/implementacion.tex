@@ -1,0 +1,108 @@
+%------------------------------------------------------------------------------%
+\section{Implementación de la propuesta}
+%------------------------------------------------------------------------------%
+
+\subsection{Planificación y estimación}
+
+\begin{table}
+	\small\centering
+    \caption{Cronograma y planificación de los \textit{sprints}. La ``S'' es de \textit{sprint}.}
+    \label{tab:sprints}
+    \begin{NiceTabular}{p{4.5cm}|c|c|c|c|c|c|c|c|c|c|c|c|c}[
+        code-before = 
+        \cellcolor{mygreen}{2-2, 2-3, 2-8, 2-11}
+        \cellcolor{mygreen}{3-2, 3-3, 3-8, 3-11}
+        \rectanglecolor{mygreen}{4-4}{4-6}
+        \rectanglecolor{mygreen}{5-4}{5-7}\rectanglecolor{mygreen}{5-9}{5-13}
+        \cellcolor{mygreen}{6-8, 6-11}
+        \rectanglecolor{mygreen}{7-4}{7-13}
+        \rectanglecolor{mygreen}{8-7}{8-13}
+        \cellcolor{mygreen}{9-7, 9-10, 9-13}
+     ]
+        \hline
+        Actividad                  & S1& S2& S3& S4& S5& S6& S7& S8& S9&S10&S11&S12\\
+        \hline
+        Investigación del producto &   &   &   &   &   &   &   &   &   &   &   &   \\
+        \hline
+        Diseño                     &   &   &   &   &   &   &   &   &   &   &   &   \\
+        \hline
+        Desarrollo red neuronal    &   &   &   &   &   &   &   &   &   &   &   &   \\
+        \hline
+        Desarrollo aplicación web  &   &   &   &   &   &   &   &   &   &   &   &   \\
+        \hline
+        Retroalimentación          &   &   &   &   &   &   &   &   &   &   &   &   \\
+        \hline
+        Desarrollo 
+        API             &   &   &   &   &   &   &   &   &   &   &   &   \\
+        \hline
+        Entrenamiento y mejora red neuronal &   &   &   &   &   &   &   &   &   &   &   \\
+        \hline
+        Lanzamiento PMV            &   &   &   &   &   &   &   &   &   &   &   &   \\
+        \hline      
+    \end{NiceTabular}
+\end{table}
+
+
+
+\begin{table}
+    \small\centering
+    \caption{Costos del proyecto.}
+    \label{tab:costos}
+    \begin{tabular}{p{4.5cm}rrrr}
+        \toprule
+        Recursos Humanos & Cantidad & Costo mensual & Meses & Subtotal \\
+        \midrule
+        \textit{Senior FullStack Developer} & 1 & 50,000 & 3 & 150,000 \\
+        \textit{Junior Fullstack Developer} & 1 & 28,000 & 3 & 84,000 \\
+        \textit{Senior Ux Design}er & 1 & 35,000 & 3 & 105,000 \\
+        Arquitecto de sistemas \textit{Cloud mid level} & 1 & 75,000 & 3 & 225,000 \\
+        \textit{Product Owner }& 1 & 65,000 & 3 & 195,000 \\
+        \midrule
+        &  &  &  Total & 759,000 \\
+        \bottomrule
+        \toprule
+        Servicios & Cantidad & Costo mensual & Meses & Subtotal \\
+        \midrule
+        Servicios Azure & 1 & 51,413 & 3 & 154,240 \\
+        \midrule
+        &  &  &  Total & 154,240 \\
+        \bottomrule
+        \toprule 
+        Materiales & & Cantidad & Costo & Subtotal \\
+        \midrule
+        \textit{Laptop hp zbook 14 Firefly G8} & & 4 & 35,000 & 140,000 \\
+        \textit{Macbook Pro MKGP3E/A} & & 2 & 49,000 & 98,000 \\
+        \midrule
+        &  &  Total &  & 238,000 \\
+        \bottomrule 
+        \toprule 
+        Infraestructura &  & Costo mensual & Meses & Subtotal \\
+        \midrule
+        Internet & & 3,000 & 14 & 42,000 \\
+        \midrule
+        &  &  Total &  & 42,000 \\
+        \bottomrule
+        \toprule 
+        \multicolumn{4}{r}{\textbf{Total global del proyecto}} & \textbf{1,193,240} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Prototipo}
+
+\begin{figure}
+    \centering
+    \caption[Diagrama del funcionamiento de la aplicación.]{Diagrama del funcionamiento de la aplicación.}
+    \label{fig:funcionamiento}
+    \input{../figures/prototipo.tikz}
+    \source{Elaboración propia con información de \figurecite{ferreit2021}.}
+\end{figure}
+
+
+\subsection{Despliegue}
+
+El despliegue se dará en los sprint 6,9 y 12, como está demostrado en la tabla (planificación), esto al generar una actualización del sitio web usando Azure VMs para la liberación, actualizando la aplicación. 
+
+\subsection{Mantenimiento}
+
+El plan de mantenimiento contempla un desarrollo continuo de la aplicación en concordancia con el modelo scrum, tanto para mantener la funcionalidad existente como para desarrollar funcionalidades nuevas que sumen a la aplicación en sí misma.

@@ -82,11 +82,7 @@
   BoldFont        = calibri.ttf,
   ItalicFont      = calibrili.ttf]{calibril.ttf}
 
-
-\setmonofont[Path=../fonts/,
-  BoldItalicFont  = consolaz.ttf,
-  BoldFont        = consolab.ttf,
-  ItalicFont      = consolai.ttf]{consola.ttf}
+\setmonofont{Consolas}
 
 \defaultfontfeatures{Scale=MatchUppercase}
 \setmathfont{FiraMath-Regular.otf}
@@ -204,11 +200,9 @@
   isbn=true,
   url=true,
   doi=true,
-  natbib=true,
-  citestyle=authoryear
+  natbib=true
   ]{biblatex}%
 \addbibresource{../../references/biblography.bib}
-
 
 \DeclareDelimFormat*{finalnamedelim}
   {\ifnum\value{liststop}>2 \finalandcomma\fi\addspace{y}\space}
@@ -407,8 +401,8 @@
 \fancyhf{}
 
 \rhead{\textlf{\fontsize{10pt}{10pt}\selectfont \attitle \\ \vspace{3pt}
-  \atfirstauthor \\
   \atsecondauthor \\
+  \atfirstauthor \\
   %\atthirdauthor \\
 }}% 
 \rfoot{\thepage}
@@ -476,7 +470,8 @@
 %                                 TITLE PAGE                                   %
 %------------------------------------------------------------------------------%
 \RequirePackage{multirow}
-\RequirePackage{array, booktabs, arydshln,xcolor}
+%longtable before arydshln
+\RequirePackage{array, booktabs,longtable, arydshln, xcolor}
 \RequirePackage{anyfontsize}
 
 \newcommand\VRule[1][\arrayrulewidth]{\vrule width #1}
@@ -539,8 +534,8 @@
                         !{\color{mylightgray}\VRule[0.5pt]}p{6.7cm}
                         !{\color{mylightgray}\VRule[0.5pt]}}
          \arrayrulecolor{mylightgray}\specialrule{0.5pt}{0pt}{0pt}
-         \multirow{2}{8.1cm}{Trabajo de innovación presentado por:} &      \atfirstauthor \\ 
-         & \atsecondauthor \\ 
+         \multirow{2}{8.1cm}{Trabajo de innovación presentado por:} &      \atsecondauthor \\ 
+         & \atfirstauthor \\ 
          %& \atthirdauthor \\ 
          \arrayrulecolor{mylightgray}\specialrule{0.5pt}{0pt}{0pt}
          Fecha: & \atdate \\ 
