@@ -4,6 +4,8 @@
 
 \subsection{Planificación y estimación}
 
+En la \tabla{tab:sprints} se puede apreciar a detalle la planificación del proyecto en \textit{sprints}. En la \tabla{tab:costos} se muestran los costes asociados a las distintas actividades y materiales requeridos durante el mismo.
+
 \begin{table}
 	\small\centering
     \caption{Cronograma y planificación de los \textit{sprints}. La ``S'' es de \textit{sprint}.}
@@ -90,6 +92,14 @@
 
 \subsection{Prototipo}
 
+El prototipo del proyecto se puede encontrar en el repositorio de \footnote{Aún no está disponible para instalar, estará disponible en los próximos días}:
+
+\begin{quotebox}
+    \href{https://github.com/rodoart/pet-surveillance}{https://github.com/rodoart/pet-surveillance}
+\end{quotebox}    
+
+El prototipo sigue el diagrama de la \figura{fig:funcionamiento}. La fase de procesamiento está explicada en la \figura{fig:mascotas}.
+
 \begin{figure}
     \centering
     \caption[Diagrama del funcionamiento de la aplicación.]{Diagrama del funcionamiento de la aplicación.}
@@ -100,8 +110,29 @@
 
 \subsection{Despliegue}
 
-El despliegue se dará en los sprint 6,9 y 12, como está demostrado en la tabla (planificación), esto al generar una actualización del sitio web usando Azure VMs para la liberación, actualizando la aplicación. 
+El despliegue se dará en los sprint 6,9 y 12, como está demostrado en la tabla (planificación), esto al generar una actualización del sitio web usando Azure VM's para la liberación, actualizando la aplicación. 
+
+\subsubsection{Configuración de entornos de desarrollo y producción}
+
+Al usar Azure, específicamente su modalidad de \textit{IaaS} —\textit{Infrastructure As A Service} o Infrastructura como servicio— podemos aprovechar las facilidades que otorga al poder usar diferentes entornos para distintas situaciones. 
+
+Se configura un grupo de recursos —\textit{Resource Group}— en Azure para el entorno de producción y uno para el entorno de desarrollo, usando Azure Virtual Desktop los desarrolladores pueden tener acceso a una máquina virtual preconfigurada con las aplicaciones necesarias, desde allí ocuparan visual studio para subir su código a GitHub, una vez publicado en GitHub usando Azure pipelines se automatizará el proceso de compilación y publicación, este proceso da como resultado artefactos con los archivos necesarios para ejecutar la aplicación que automáticamente son publicados en el entorno de desarrollo y producción.
+
+\subsection{Posibles contingencias}
+
+En esta sección se describen las principales riesgos al proyecto, una descripción en breve del plan para mitigar o resolver en caso de ocurrencia.
+
+\subsubsection{Agotar el presupuesto}
+
+Debido a la metodología ágil del proyecto. Será realizado por etapas, en las que se entregarán versiones funcionales del sistema. Lo que hace que el riesgo sea menor, debido a que el proyecto puede llevarse a producción, o mostrarse como una versión de prueba en la que se pidan donativos en organizaciones de microfinanciamiento como Patreon.
+
+
+\subsubsection{No encontrar un nicho en el mercado}
+
+Incluso teniendo la retroalimentación de los clientes, puede haber peligros en esta área, el producto inicial podría ser demasiado costoso, o los potenciales clientes podrían ser menos de los que se están esperando. Este es el mayor riesgo al proyecto, se tendría que replantear una alternativa con la tecnología desarrollada, por ejemplo, el proyecto fácilmente puede ser repensado como un sistema de vigilancia automática o como una aplicación que identifica los rostros de las mascotas y les aplica filtros y fondos en un ambiente hogareño.
+
+
 
 \subsection{Mantenimiento}
 
-El plan de mantenimiento contempla un desarrollo continuo de la aplicación en concordancia con el modelo scrum, tanto para mantener la funcionalidad existente como para desarrollar funcionalidades nuevas que sumen a la aplicación en sí misma.
+El plan de mantenimiento contempla un desarrollo continuo de la aplicación en concordancia con el modelo SCRUM, tanto para mantener la funcionalidad existente como para desarrollar funcionalidades nuevas que sumen a la aplicación en sí misma.
