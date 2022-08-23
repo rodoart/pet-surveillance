@@ -400,6 +400,9 @@
 \pagestyle{fancy}
 \fancyhf{}
 
+\setlength{\headheight}{48.68597pt}
+\addtolength{\topmargin}{-36.68597pt}
+
 \rhead{\textlf{\fontsize{10pt}{10pt}\selectfont \attitle \\ \vspace{3pt}
   \atsecondauthor \\
   \atfirstauthor \\

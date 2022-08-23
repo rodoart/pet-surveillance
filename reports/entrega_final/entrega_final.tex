@@ -20,10 +20,10 @@
 \usepackage{animate}
 
 % Apendice.
+\usepackage{threeparttablex} % for "ThreePartTable" environment
 \usepackage{array,multirow,graphicx}
 \usepackage{float}
 \usepackage{booktabs}
-
 
 %Metodologia
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt  
@@ -49,9 +49,9 @@
 }
 \pagebreak
 
-\include{capitulos/introduccion}
-\include{capitulos/objetivos}
-\include{capitulos/desarrollo}
+%\include{capitulos/introduccion}
+%\include{capitulos/objetivos}
+%\include{capitulos/desarrollo}
 
 \newlength{\lanscapetablewidth}
 \setlength{\lanscapetablewidth}{1.3\linewidth}
@@ -211,10 +211,12 @@
 
 
 %------------------------------------------------------------------------------%
-\addcontentsline{toc}{section}{Anexo A. Resultados de la encuesta}
-\label{ape:tablaencuesta}
-\setlength{\lanscapetablewidth}{1.0\linewidth}
-\include{capitulos/apendice_tabla_encuesta.tex}
+%\addcontentsline{toc}{section}{Anexo A. Resultados de la encuesta}
+%\label{ape:tablaencuesta}
+
+
+%\setlength{\lanscapetablewidth}{1.0\linewidth}
+%\include{capitulos/apendice_tabla_encuesta.tex}
 
 
 
