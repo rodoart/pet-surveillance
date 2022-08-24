@@ -1,3 +1,5 @@
+import cv2
+import numpy as np
 from pet_surveillance.models import segformer
 
 def motion_detector():
