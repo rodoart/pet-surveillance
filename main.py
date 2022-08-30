@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from pet_surveillance.models import segformer
+from PIL import Image
 
 def motion_detector():
   
@@ -36,10 +37,19 @@ def motion_detector():
     diff_frame = cv2.dilate(diff_frame, kernel, 1)
 
 def run():
-    obe = segformer.Segformer()
-    img = obe.predict_labels('data/processed/semantic_segmentation/unity_residential_interiors/train_images/7.png', 'tmp/images/7.png')
 
-    print(obe.detect_floor(img))
+
+  image_path = 'data/processed/semantic_segmentation/unity_residential_interiors/train_images/7.png'
+  
+
+
+  obe = segformer.Segformer()
+
+  image = Image.open(image_path)
+  image_array = np.asarray(image)
+  img = obe.predict_labels(image_array)
+
+  print(np.sum(obe.detect_floor(img)))
 
 if __name__ == '__main__':
     run()

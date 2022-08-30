@@ -37,10 +37,14 @@ sys.path.append('tensorflow/models/research/')
 sys.path.append('tensorflow/models/research/object_detection/')
 camera_type = 'usb'
 parser = argparse.ArgumentParser()
+
+
 parser.add_argument('--picamera', help='Use a picamera instead of a USB webcam',
                     action='store_true')
 args = parser.parse_args()
-if args.usbcam:
+
+
+if args.picamera:
     camera_type = 'picamera'
 
 #### Initialize TensorFlow model ####
@@ -256,6 +260,8 @@ if camera_type == 'usb':
         # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
         # i.e. a single-column array, where each item in the column has the pixel RGB value
         ret, frame = camera.read()
+
+        print(type(frame), frame.shape)
 
         # Pass frame into pet detection function
         frame = pet_detector(frame)
