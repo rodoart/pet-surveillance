@@ -1,13 +1,17 @@
 import cv2
 import numpy as np
+from Pet_detector import setupCamera
 from pet_surveillance.models import segformer
 from PIL import Image
 
-def motion_detector():
+def motion_detector(camera_type, testurl):
   
   frame_count = 0
   previous_frame = None
-  cap = cv2.VideoCapture(0)
+  if(camera_type == 'usb_camera'):
+    cap = cv2.VideoCapture(0)
+  else:
+    cap = cv2.VideoCapture(testurl)
   
   while True:
     frame_count += 1
@@ -34,11 +38,12 @@ def motion_detector():
 
     # 4. Dilute the image a bit to make differences more seeable; more suitable for contour detection
     kernel = np.ones((5, 5))
-    diff_frame = cv2.dilate(diff_frame, kernel, 1)
+    return (bool(diff_frame = cv2.dilate(diff_frame, kernel, 1)))
 
 def run():
 
-
+  #if(motion_detector('test_video', 'data/VideoTests/test.mp4')):
+  setupCamera('test_video', 'data/VideoTests/test.mp4')
   image_path = 'data/processed/semantic_segmentation/unity_residential_interiors/train_images/7.png'
   
 
