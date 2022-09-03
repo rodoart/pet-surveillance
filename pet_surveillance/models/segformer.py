@@ -94,9 +94,7 @@ class Segformer():
         image = io.read_image(str(image_path))
 
         if str(image_path).endswith('png'):
-            image = image[:3,:,:]
-        
-        
+            image = image[:3,:,:]      
         
         return image
 
@@ -123,7 +121,6 @@ class Segformer():
         image_ = T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))(image_)
         # add batch size
         image_ = image_.unsqueeze(0)
-
         return image_
 
     def _inference(self, image:torch.Tensor) -> torch.Tensor:  
@@ -140,10 +137,9 @@ class Segformer():
         return seg_map
 
 
-    def _show_image(self, image: torch.Tensor) -> Image.Image:
-        if image.shape[2] != 3: image = image.permute(1, 2, 0)
-        image = Image.fromarray(image.numpy())
+    def _show_image(self, image: torch.Tensor) -> np.ndarray:
         return image
+        
 
     def _interpolate(self, image:np.ndarray, size:tuple) -> np.ndarray:
         return cv2.resize(image, dsize=size, interpolation=cv2.INTER_NEAREST)
@@ -153,30 +149,28 @@ class Segformer():
     ) -> Image.Image:
 
 
-
+        # Str
         if (type(labels_path) == str) and (labels_path):
             labels_path = Path(labels_path)                    
         
-        
+        # Image
         if type(image) in [str,Path]:
             img = self._load_image_from_file(image)
         else:
             img = self._load_image_from_np_array(image)
 
 
-        original_size = tuple(img.shape[1:])        
+        # Original_size
+        original_size = tuple(img.shape[1:])  
+        original_size = original_size[::-1]   
+
+
         img = self._preprocess_image(img)
         labels = self._inference(img)
+        labels = labels.numpy()
+        labels = self._interpolate(labels, original_size)
 
-        img_labels = self._show_image(labels)
-        img_labels = np.asarray(img_labels)
-        img_labels = self._interpolate(img_labels, original_size)
-
-        # if labels_path:
-        #     labels_path.parent.mkdir(exist_ok=True, parents=True)
-        #     img_labels.save(str(labels_path))
-
-        return img_labels
+        return labels
 
     def detect_floor(self, labels:Union[str,Path, Image.Image])->np.array:
         
@@ -185,12 +179,31 @@ class Segformer():
         else:
             img = labels
 
-        img = np.asarray(img)
-        colors = np.unique(img.reshape(-1, img.shape[2]), axis=0)
-        floor_color = colors[3]
 
+        # Convert to array
+        img = np.asarray(img)
+
+        # Find Unique Colors
+        colors = np.unique(img.reshape(-1, img.shape[2]), axis=0)
+
+        # Find the floor
+        max_num_of_pixels_same_color = 0    
+        # Find pixels in border with same color:    
+        for color in colors:
+            sum_border = np.sum(np.all(img[-1,:,:] == color, axis=-1))
+
+            # Find the sum of all pixels with the same color
+            if sum_border > 0:
+                sum_all = np.sum(np.all(img == color, axis=-1))
+
+                if sum_all > max_num_of_pixels_same_color:
+                    max_num_of_pixels_same_color = sum_all
+                    floor_color = color
+
+        # Finding coordinates of floor pixels
         indices = np.where(np.all(img == floor_color, axis=-1))
 
+        # Creating a mask.
         mask = np.zeros(img.shape[:-1], bool)
 
         mask[indices] = True

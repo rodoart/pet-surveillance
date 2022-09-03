@@ -22,6 +22,16 @@ def correct_labels(
         img_reshaped[img_reshaped == color] = k
     
     return img_reshaped.reshape(img.shape)[:,:,1]
+
+
+import numpy as np
+import cv2
+
+img = cv2.imread('1_calib.jpeg')
+overlay_t = cv2.imread('ol.png',-1) # -1 loads with transparency
+
+
+
             
     
 

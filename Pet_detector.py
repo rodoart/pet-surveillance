@@ -1,10 +1,18 @@
+# Environment Path 
+
+import sys
+sys.path.append('tensorflow/models/research/')
+sys.path.append('tensorflow/models/research/object_detection/')
+
+
 # Import packages
 import os
 import cv2
 import numpy as np
 import tensorflow as tf
 import argparse
-import sys
+from pet_surveillance.models import segformer
+
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 
@@ -32,18 +40,25 @@ def setupCamera(camera_type, testurl):
     ret = camera.set(3,IM_WIDTH)
     ret = camera.set(4,IM_HEIGHT)
         # Continuously capture frames and perform object detection on them
-    while(camera.isOpened()):
+    
+    
+    parser, sess, category_index, detection_graph = create_model_boxes()
 
+    obe = segformer.Segformer()
+    
+    steps = 0
+
+    while(camera.isOpened()):        
+        
         t1 = cv2.getTickCount()
 
         # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
         # i.e. a single-column array, where each item in the column has the pixel RGB value
         ret, frame = camera.read()
         if(ret == True):
-            print(type(frame), frame.shape)
 
             # Pass frame into pet detection function
-            frame = pet_detector(frame, IM_WIDTH, IM_HEIGHT, font)
+            frame = pet_detector(frame, IM_WIDTH, IM_HEIGHT, font,detection_graph, sess, category_index, obe, steps)
 
             # Draw FPS
             cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
@@ -56,11 +71,17 @@ def setupCamera(camera_type, testurl):
             time1 = (t2-t1)/freq
             frame_rate_calc = 1/time1
 
+
+            steps += 1
+
             # Press 'q' to quit
             if cv2.waitKey(1) == ord('q'):
-                    break
+                camera.release()
+                break
 
-            camera.release()
+
+
+                
         else:
             break
 
@@ -72,10 +93,10 @@ def setupCamera(camera_type, testurl):
     # inside or outside, and send a text to the user's phone.
     #### Initialize camera and perform object detection ####
 
-def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, ):
-    
-    sys.path.append('tensorflow/models/research/')
-    sys.path.append('tensorflow/models/research/object_detection/')
+
+def create_model_boxes():
+    # sys.path.append('tensorflow/models/research/')
+    # sys.path.append('tensorflow/models/research/object_detection/')
     parser = argparse.ArgumentParser()
 
     #### Initialize TensorFlow model ####
@@ -122,6 +143,32 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, ):
 
         sess = tf.compat.v1.Session(graph=detection_graph)
 
+    return parser, sess, category_index, detection_graph
+
+
+def pet_detector(frame, im_width, im_height, font, detection_graph, sess, category_index, model, steps):
+    
+    
+    if 'old_frame' not in globals():
+        global old_frame
+        old_frame = frame
+
+    if not steps%10:
+        return old_frame
+
+
+    if 'floor' not in globals():
+        global floor
+        img = model.predict_labels(frame)
+        floor = model.detect_floor(img)
+
+
+    
+    if not steps%100:
+        img = model.predict_labels(frame)
+        floor = model.detect_floor(img)
+
+
 
     # Define input and output tensors (i.e. data) for the object detection classifier
 
@@ -146,12 +193,12 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, ):
     global pause, pause_counter
     
     # Define inside box coordinates (top left and bottom right)
-    TL_inside = (int(IM_WIDTH*0.1),int(IM_HEIGHT*0.35))
-    BR_inside = (int(IM_WIDTH*0.45),int(IM_HEIGHT-5))
+    TL_inside = (int(im_width*0.1),int(im_height*0.35))
+    BR_inside = (int(im_width*0.45),int(im_height-5))
 
     # Define outside box coordinates (top left and bottom right)
-    TL_outside = (int(IM_WIDTH*0.46),int(IM_HEIGHT*0.25))
-    BR_outside = (int(IM_WIDTH*0.8),int(IM_HEIGHT*.85))
+    TL_outside = (int(im_width*0.46),int(im_height*0.25))
+    BR_outside = (int(im_width*0.8),int(im_height*.85))
 
     # Initialize control variables used for pet detector
     detected_inside = False
@@ -188,17 +235,17 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, ):
 
 
     if(((int(classes[0][0]) == 63) or (int(classes[0][0] == 62) or (int(classes[0][0]) == 1))) and (pause == 0)):
-        limitxMax = int(((boxes[0][0][1]+boxes[0][0][3])/2)*IM_WIDTH)
-        limityMax = int(((boxes[0][0][1]+boxes[0][0][2])/2)*IM_HEIGHT)
-        limitxMin = int(((boxes[0][0][1]+boxes[0][0][1])/2)*IM_WIDTH)
-        limityMin = int(((boxes[0][0][1]+boxes[0][0][0])/2)*IM_HEIGHT)
+        limitxMax = int(((boxes[0][0][1]+boxes[0][0][3])/2)*im_width)
+        limityMax = int(((boxes[0][0][1]+boxes[0][0][2])/2)*im_height)
+        limitxMin = int(((boxes[0][0][1]+boxes[0][0][1])/2)*im_width)
+        limityMin = int(((boxes[0][0][1]+boxes[0][0][0])/2)*im_height)
     # Check the class of the top detected object by looking at classes[0][0].
     # If the top detected object is a cat (17) or a dog (18) (or a teddy bear (88) for test purposes),
     # find its center coordinates by looking at the boxes[0][0] variable.
     # boxes[0][0] variable holds coordinates of detected objects as (ymin, xmin, ymax, xmax)
     if (((int(classes[0][0]) == 17) or (int(classes[0][0] == 1) or (int(classes[0][0]) == 88))) and (pause == 0)):
-        x = int(((boxes[0][0][1]+boxes[0][0][3])/2)*IM_WIDTH)
-        y = int(((boxes[0][0][0]+boxes[0][0][2])/2)*IM_HEIGHT)
+        x = int(((boxes[0][0][1]+boxes[0][0][3])/2)*im_width)
+        y = int(((boxes[0][0][0]+boxes[0][0][2])/2)*im_height)
 
         # Draw a circle at center of object
         cv2.circle(frame,(x,y), 5, (75,13,180), -1)
@@ -232,12 +279,12 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, ):
     # If pause flag is set, draw message on screen.
     if pause == 1:
         if detected_inside == True:
-            cv2.putText(frame,'Pet wants outside!',(int(IM_WIDTH*.1),int(IM_HEIGHT*.5)),font,3,(0,0,0),7,cv2.LINE_AA)
-            cv2.putText(frame,'Pet wants outside!',(int(IM_WIDTH*.1),int(IM_HEIGHT*.5)),font,3,(95,176,23),5,cv2.LINE_AA)
+            cv2.putText(frame,'Pet wants outside!',(int(im_width*.1),int(im_height*.5)),font,3,(0,0,0),7,cv2.LINE_AA)
+            cv2.putText(frame,'Pet wants outside!',(int(im_width*.1),int(im_height*.5)),font,3,(95,176,23),5,cv2.LINE_AA)
 
         if detected_outside == True:
-            cv2.putText(frame,'Pet wants inside!',(int(IM_WIDTH*.1),int(IM_HEIGHT*.5)),font,3,(0,0,0),7,cv2.LINE_AA)
-            cv2.putText(frame,'Pet wants inside!',(int(IM_WIDTH*.1),int(IM_HEIGHT*.5)),font,3,(95,176,23),5,cv2.LINE_AA)
+            cv2.putText(frame,'Pet wants inside!',(int(im_width*.1),int(im_height*.5)),font,3,(0,0,0),7,cv2.LINE_AA)
+            cv2.putText(frame,'Pet wants inside!',(int(im_width*.1),int(im_height*.5)),font,3,(95,176,23),5,cv2.LINE_AA)
 
         # Increment pause counter until it reaches 30 (for a framerate of 1.5 FPS, this is about 20 seconds),
         # then unpause the application (set pause flag to 0).
@@ -252,4 +299,5 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, ):
     cv2.putText(frame,'Detection counter: ' + str(max(inside_counter,outside_counter)),(10,100),font,0.5,(255,255,0),1,cv2.LINE_AA)
     cv2.putText(frame,'Pause counter: ' + str(pause_counter),(10,150),font,0.5,(255,255,0),1,cv2.LINE_AA)
 
+    old_frame = frame
     return frame
