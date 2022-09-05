@@ -60,7 +60,13 @@ def setupCamera(camera_type, file_path=''):
         if(ret == True):
 
             # Pass frame into pet detection function
-            floor = floor_detection(frame, objectSegformer)
+            global floor
+            
+            try:
+                floor
+            except:
+                floor = floor_detection(frame, objectSegformer)
+            
             frame = pet_detector(frame, floor, IM_WIDTH, IM_HEIGHT, font, objectModel)
 
             # Draw FPS
