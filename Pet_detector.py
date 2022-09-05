@@ -144,6 +144,10 @@ def pet_detector(frame, floor, im_width, im_height, font, objectModel):
         limitxMin = int(((boxes[0][0][1]+boxes[0][0][1])/2)*im_width)
         limityMin = int(((boxes[0][0][1]+boxes[0][0][0])/2)*im_height)
 
+    
+
+
+
     # Check the class of the top detected object by looking at classes[0][0].
     # If the top detected object is a cat (17) or a dog (18) (or a teddy bear (88) for test purposes),
     # find its center coordinates by looking at the boxes[0][0] variable.
@@ -151,11 +155,24 @@ def pet_detector(frame, floor, im_width, im_height, font, objectModel):
     x = 0
     y = 0
     if (((int(classes[0][0]) == 17) or (int(classes[0][0] == 1) or (int(classes[0][0]) == 88))) and (pause == 0)):
-        x = int(((boxes[0][0][1]+boxes[0][0][3])/2)*im_width)
+        
+
+        x = int(((boxes[0][0][1]+boxes[0][0][1])/2)*im_width)
         y = int(((boxes[0][0][0]+boxes[0][0][2])/2)*im_height)
 
         # Draw a circle at center of object
         cv2.circle(frame,(x,y), 5, (75,13,180), -1)
+
+        delta = int(0.025*(im_width+im_height)/2)
+
+        # Probability of the animal not in the floor.
+        floor_arround_center = floor[y-delta:y+delta, x-delta: x+delta]
+        
+        sum_floor = np.sum(floor_arround_center==True)
+        box_area = floor_arround_center.shape[0]*floor_arround_center.shape[1]
+        
+        p_not_in_floor = 1-sum_floor/box_area
+        print(p_not_in_floor)
 
         # If object is in inside box, increment inside counter variable
         if ((x >= limitxMin) and (y >= limityMin) and (y <= limityMax)):
