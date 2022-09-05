@@ -12,6 +12,7 @@ import numpy as np
 import tensorflow as tf
 import argparse
 from pet_surveillance.models import segformer
+from pet_surveillance.utils.video_layers import boolean_mask_overlay
 
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
@@ -148,25 +149,49 @@ def create_model_boxes():
 
 def pet_detector(frame, im_width, im_height, font, detection_graph, sess, category_index, model, steps):
     
-    
+  
+    # Keeps a copy of the last generated frame, then it shows whenever steps%10
+    # in order to save resources.
     if 'old_frame' not in globals():
         global old_frame
-        old_frame = frame
+        old_frame = frame.copy()
 
     if not steps%10:
         return old_frame
 
+    
+    # Frame meaning.
 
-    if 'floor' not in globals():
-        global floor
-        img = model.predict_labels(frame)
-        floor = model.detect_floor(img)
+    if 'old_not_labeled_frame' not in globals():
+        global old_not_labeled_frame
+        old_not_labeled_frame = frame.copy()
 
+    if 'mean_frame' not in globals():
+        global mean_frame
+        mean_frame = old_not_labeled_frame.copy()
 
     
-    if not steps%100:
-        img = model.predict_labels(frame)
-        floor = model.detect_floor(img)
+
+    # New frames weights less and less until max_step_number
+    max_step_number = 1000
+    
+    if steps % 500:        
+        divider = 3
+
+        # Weighted mean        
+        mean_frame = np.uint8(np.round(mean_frame*((divider-1)/divider) + old_not_labeled_frame*((1/divider))))
+    
+        old_not_labeled_frame = frame.copy()
+
+    # Floor detection
+    if 'floor' not in globals():
+        global floor
+        labels = model.predict_labels(mean_frame)
+        floor = model.detect_floor(labels)
+
+    if steps%max_step_number:
+        labels = model.predict_labels(mean_frame)
+        floor = model.detect_floor(labels)
 
 
 
@@ -216,6 +241,11 @@ def pet_detector(frame, im_width, im_height, font, detection_graph, sess, catego
         [detection_boxes, detection_scores, detection_classes, num_detections],
         feed_dict={image_tensor: frame_expanded})
 
+    # Draw floor
+    frame = boolean_mask_overlay(frame, mask=floor)
+
+    
+    
     # Draw the results of the detection (aka 'visualize the results')
     vis_util.visualize_boxes_and_labels_on_image_array(
         frame,

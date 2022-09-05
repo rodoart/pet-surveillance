@@ -1,3 +1,4 @@
+from pickletools import uint8
 import cv2
 import numpy as np
 from Pet_detector import setupCamera
@@ -70,24 +71,42 @@ def test_floor_detection_overlays():
         cv2.destroyAllWindows()
 
 
-def run():
-
+def test_pet_detector():
   #if(motion_detector('test_video', 'data/VideoTests/test.mp4')):
   setupCamera('usb_camera', 'data/VideoTests/test.mp4')
 
 
-  image_path = 'data/processed/semantic_segmentation/unity_residential_interiors/train_images/7.png'
+def test_numpy_arrays():
+  mat = np.ones(shape=(200,150), dtype=np.uint8)
+  mat*=255
+  mat = mat/3
+
+  
+  old_not_labeled_frame = mat
+  mean_frame = mat+1
+
+
+  for step in range(30):
+    mat = mat+1
+    if step > 3:
+      divider = 3
+    else:
+      divider = step +1
+      
+    mean_frame = mean_frame*((divider-1)/divider) + old_not_labeled_frame*((1/divider))
+
+    old_not_labeled_frame = mat.copy()
+
+
+  print(np.uint8(np.round(mean_frame)))
+
+
   
 
 
-  obe = segformer.Segformer()
 
-  image = Image.open(image_path)
-  image_array = np.asarray(image)
-  img = obe.predict_labels(image_array)
-
-  print(np.sum(obe.detect_floor(img)))
-
+def run():
+  test_pet_detector()
 
 
 
