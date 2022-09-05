@@ -87,7 +87,7 @@ class Segformer():
 
         self.model = model
 
-        print('Loaded Model')
+        print('Loaded SegFormer Model.')
 
 
     def _load_image_from_file(self, image_path:Union[str,Path])-> torch.Tensor:

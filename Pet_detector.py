@@ -1,15 +1,25 @@
+# Add submodule folder to path.
+## Modifications to the library were required, therefore necessary.
+
+import sys
+sys.path.append('tensorflow/models/research/')
+sys.path.append('tensorflow/models/research/object_detection/')
+
 # Import packages
 import os
 import cv2
 import numpy as np
 import tensorflow as tf
 import argparse
-import sys
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 from Pet_detector_object import object_model as model
 
-def setupCamera(camera_type, testurl):
+## Segformer
+from pet_surveillance.models import segformer
+from pet_surveillance.utils.video_layers import boolean_mask_overlay
+
+def setupCamera(camera_type, file_path=''):
     # Set up camera constants
     IM_WIDTH = 1280
     IM_HEIGHT = 720
@@ -25,15 +35,21 @@ def setupCamera(camera_type, testurl):
     if camera_type == 'usb_camera':
         # Initialize USB webcam feed
         camera = cv2.VideoCapture(0)
-    else:
-        camera = cv2.VideoCapture(testurl)
+    elif camera_type == 'file':
+        camera =cv2.VideoCapture(file_path) 
+
     if (camera.isOpened()== False):
         print("Error opening video stream or file")
     
     ret = camera.set(3,IM_WIDTH)
     ret = camera.set(4,IM_HEIGHT)
+    
+    # Model loads
     objectModel = model_load()
+    objectSegformer = segformer.Segformer()
+
         # Continuously capture frames and perform object detection on them
+    
     while(camera.isOpened()):
 
         t1 = cv2.getTickCount()
@@ -42,10 +58,9 @@ def setupCamera(camera_type, testurl):
         # i.e. a single-column array, where each item in the column has the pixel RGB value
         ret, frame = camera.read()
         if(ret == True):
-            print(type(frame), frame.shape)
 
             # Pass frame into pet detection function
-            frame = pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel)
+            frame = pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer)
 
             # Draw FPS
             cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
@@ -73,14 +88,42 @@ def setupCamera(camera_type, testurl):
     # inside or outside, and send a text to the user's phone.
     #### Initialize camera and perform object detection ####
 
-def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel):
+def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer):
     
     # Use globals for the control variables so they retain their value after function exits
+
     global detected_inside, detected_outside
     global inside_counter, outside_counter
     global pause, pause_counter
     global limitxMax, limitxMin, limityMax, limityMin
+    global initial_frame
 
+    try:
+        pause
+    except:
+        pause = 0
+
+    try:
+        inside_counter
+    except:
+        inside_counter = 0
+
+    
+    try:
+        initial_frame
+    except:
+        initial_frame = frame.copy()   
+
+    
+    # Floor detection
+    if 'floor' not in globals():
+        global floor
+        labels = objectSegformer.predict_labels(initial_frame)
+        floor = objectSegformer.detect_floor(labels)
+
+    
+     
+    
     # Initialize control variables used for pet detector
     detected_inside = False
     frame_expanded = np.expand_dims(frame, axis=0)
@@ -89,6 +132,9 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel):
     (boxes, scores, classes, num) = objectModel.sess.run(
         [objectModel.detection_boxes, objectModel.detection_scores, objectModel.detection_classes, objectModel.num_detections],
         feed_dict={objectModel.image_tensor: frame_expanded})
+
+    # Draw floor
+    frame = boolean_mask_overlay(frame, mask=floor)
 
     # Draw the results of the detection (aka 'visualize the results')
     vis_util.visualize_boxes_and_labels_on_image_array(
@@ -131,10 +177,11 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel):
         # Pause pet detection by setting "pause" flag
         pause = 1
 
-    # If pause flag is set, draw message on screen.
+    # If paussee flag is set, draw message on screen.
     # Draw counter info
-    cv2.putText(frame,'Detection counter: ' + str(inside_counter,(10,100),font,0.5,(255,255,0),1,cv2.LINE_AA))
-
+    cv2.putText(frame, f'Detection counter: {str(inside_counter)}', (10,100),
+                font, 0.5, (255,255,0), 1, cv2.LINE_AA)
+    
     return frame
 
 def model_load():
@@ -153,7 +200,7 @@ def model_load():
     # Import utilites
 
     # Name of the directory containing the object detection module we're using
-    MODEL_NAME = 'ssdlite_mobilenet_v2_coco_2018_05_09'
+    MODEL_NAME = 'models/ssdlite_mobilenet_v2_coco_2018_05_09'
 
     # Grab path to current working directory
     CWD_PATH = os.getcwd()

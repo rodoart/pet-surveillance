@@ -1,0 +1,4 @@
+outs:
+- md5: f0158b9e01424dc5bd20f000bcdad847
+  size: 29185289
+  path: frozen_inference_graph.pb

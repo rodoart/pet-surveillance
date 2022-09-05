@@ -1,12 +1,11 @@
-from types import NoneType
 import tensorflow as tf
 
 class object_model:
-    detection_graph = NoneType
-    image_tensor = NoneType
-    detection_boxes = NoneType
-    detection_scores = NoneType
-    num_detections = NoneType
-    category_index = NoneType
-    sess = NoneType
-    parser = NoneType
+    detection_graph = None
+    image_tensor = None
+    detection_boxes = None
+    detection_scores = None
+    num_detections = None
+    category_index = None
+    sess = None
+    parser = None
