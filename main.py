@@ -102,9 +102,6 @@ def test_numpy_arrays():
 
 
   
-
-
-
 def run():
   test_pet_detector()
 

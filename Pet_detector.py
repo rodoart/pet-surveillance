@@ -1,5 +1,5 @@
 # Add submodule folder to path.
-## Modifications to the library were required, therefore necessary.
+## Modifications to the library were required, therefore is necessary to load directly from the local directory.
 
 import sys
 sys.path.append('tensorflow/models/research/')
@@ -60,7 +60,8 @@ def setupCamera(camera_type, file_path=''):
         if(ret == True):
 
             # Pass frame into pet detection function
-            frame = pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer)
+            floor = floor_detection(frame, objectSegformer)
+            frame = pet_detector(frame, floor, IM_WIDTH, IM_HEIGHT, font, objectModel)
 
             # Draw FPS
             cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
@@ -88,7 +89,7 @@ def setupCamera(camera_type, file_path=''):
     # inside or outside, and send a text to the user's phone.
     #### Initialize camera and perform object detection ####
 
-def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer):
+def pet_detector(frame, floor, im_width, im_height, font, objectModel):
     
     # Use globals for the control variables so they retain their value after function exits
 
@@ -96,7 +97,6 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer)
     global inside_counter, outside_counter
     global pause, pause_counter
     global limitxMax, limitxMin, limityMax, limityMin
-    global initial_frame
 
     try:
         pause
@@ -107,21 +107,6 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer)
         inside_counter
     except:
         inside_counter = 0
-
-    
-    try:
-        initial_frame
-    except:
-        initial_frame = frame.copy()   
-
-    
-    # Floor detection
-    if 'floor' not in globals():
-        global floor
-        labels = objectSegformer.predict_labels(initial_frame)
-        floor = objectSegformer.detect_floor(labels)
-
-    
      
     
     # Initialize control variables used for pet detector
@@ -148,10 +133,10 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer)
         min_score_thresh=0.40)
 
     if(((int(classes[0][0]) == 63) or (int(classes[0][0] == 62) or (int(classes[0][0]) == 1))) and (pause == 0)):
-        limitxMax = int(((boxes[0][0][1]+boxes[0][0][3])/2)*IM_WIDTH)
-        limityMax = int(((boxes[0][0][1]+boxes[0][0][2])/2)*IM_HEIGHT)
-        limitxMin = int(((boxes[0][0][1]+boxes[0][0][1])/2)*IM_WIDTH)
-        limityMin = int(((boxes[0][0][1]+boxes[0][0][0])/2)*IM_HEIGHT)
+        limitxMax = int(((boxes[0][0][1]+boxes[0][0][3])/2)*im_width)
+        limityMax = int(((boxes[0][0][1]+boxes[0][0][2])/2)*im_height)
+        limitxMin = int(((boxes[0][0][1]+boxes[0][0][1])/2)*im_width)
+        limityMin = int(((boxes[0][0][1]+boxes[0][0][0])/2)*im_height)
 
     # Check the class of the top detected object by looking at classes[0][0].
     # If the top detected object is a cat (17) or a dog (18) (or a teddy bear (88) for test purposes),
@@ -160,8 +145,8 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer)
     x = 0
     y = 0
     if (((int(classes[0][0]) == 17) or (int(classes[0][0] == 1) or (int(classes[0][0]) == 88))) and (pause == 0)):
-        x = int(((boxes[0][0][1]+boxes[0][0][3])/2)*IM_WIDTH)
-        y = int(((boxes[0][0][0]+boxes[0][0][2])/2)*IM_HEIGHT)
+        x = int(((boxes[0][0][1]+boxes[0][0][3])/2)*im_width)
+        y = int(((boxes[0][0][0]+boxes[0][0][2])/2)*im_height)
 
         # Draw a circle at center of object
         cv2.circle(frame,(x,y), 5, (75,13,180), -1)
@@ -172,7 +157,7 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer)
 
     # If pet has been detected inside for more than 10 frames, set detected_inside flag
     if inside_counter > 10: 
-        cv2.putText(frame,'Pet is on the couch!',(int(IM_WIDTH*.1),int(IM_HEIGHT*.5)),font,3,(0,0,0),7,cv2.LINE_AA)
+        cv2.putText(frame,'Pet is on the couch!',(int(im_width*.1),int(im_height*.5)),font,3,(0,0,0),7,cv2.LINE_AA)
         inside_counter = 0
         # Pause pet detection by setting "pause" flag
         pause = 1
@@ -183,6 +168,11 @@ def pet_detector(frame, IM_WIDTH, IM_HEIGHT, font, objectModel, objectSegformer)
                 font, 0.5, (255,255,0), 1, cv2.LINE_AA)
     
     return frame
+
+def floor_detection(frame, objectSegformer):    
+    labels = objectSegformer.predict_labels(frame)
+    return objectSegformer.detect_floor(labels)   
+
 
 def model_load():
 

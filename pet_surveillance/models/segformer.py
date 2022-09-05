@@ -1,3 +1,5 @@
+## Libraries
+
 
 from ..utils.paths import make_dir_function, is_valid
 from git import Repo
@@ -10,6 +12,8 @@ from pathlib import Path
 import numpy as np
 import cv2
 
+import pandas as pd
+
 import subprocess
 import sys
 
@@ -17,8 +21,7 @@ from typing import Union
 
 
 local_dir = make_dir_function()
-repo_dir = local_dir('tmp', 'semantic_segmentation')
-git_url = 'https://github.com/sithu31296/semantic-segmentation'
+repo_dir = local_dir('semantic_segmentation')
 
 
 
@@ -32,22 +35,30 @@ def _download_library() -> None:
 
 
 def _install_library() -> None :
-    assert is_valid(repo_dir)
+    if not is_valid(repo_dir):
+        _download_library()
 
     python = sys.executable
     subprocess.check_call([python, 
         "-m",  "pip", "install",  "-e",  str(repo_dir)
         ], stdout=subprocess.DEVNULL)
 
-if not is_valid(repo_dir):
-    _download_library()
-    _install_library()
 
+# Append repo_dir to path
 if str(repo_dir) not in sys.path:
     sys.path.append(str(repo_dir))
 
-from semseg.models import *
-from semseg.datasets import *
+
+# Verify if semseg is installed.
+try: 
+    from semseg.models import *
+    from semseg.datasets import *
+except:
+    _install_library()
+    from semseg.models import *
+    from semseg.datasets import *
+
+
 palette = eval('ADE20K').PALETTE
 
 class Segformer():
@@ -187,33 +198,71 @@ class Segformer():
         colors = np.unique(img.reshape(-1, img.shape[2]), axis=0)
 
         # Find the floor
-        max_num_of_pixels_same_color = 0    
-        # Find pixels in border with same color:    
+        max_floor_probability = 0.0
+
+        bottom_edge_total = img.shape[1]
+        area_total = img.shape[0]*img.shape[1]
+
+
+
+
+        floor_indices = 0
+
+        
+        ## Find all pixels at bottom edge with same color:    
         for color in colors:
-            sum_border = np.sum(np.all(img[-1,:,:] == color, axis=-1))
+            bottom_edge_color = np.sum(np.all(img[-1,:,:] == color, axis=-1))
 
-            # Find the sum of all pixels with the same color
-            if sum_border > 0:
-                sum_all = np.sum(np.all(img == color, axis=-1))
+            ### Find the sum of all pixels with the same color
+            if bottom_edge_color > 0:
 
-                if sum_all > max_num_of_pixels_same_color:
-                    max_num_of_pixels_same_color = sum_all
-                    floor_color = color
+                ### Relative size to the bottom edge.
+                p_bottom_edge = bottom_edge_color/\
+                    bottom_edge_total                 
+                
 
-        # Finding coordinates of floor pixels
-        indices = np.where(np.all(img == floor_color, axis=-1))
+                ### Relative total area.
+                indices = np.all(img == color, axis=-1)
+            
+                
+                area_color = np.sum(indices)
+                p_size = area_color/area_total
+
+                ### Vertical position of the center of mass.
+
+                vpcm = vertical_position_center_of_mass(indices)
+
+                p_cm = vpcm/img.shape[0]
+
+                p_total = p_bottom_edge*p_cm*p_size
+                
+                if p_total > max_floor_probability:
+                    max_floor_probability = p_total
+                    floor_indices = indices.copy()
+
+
 
         # Creating a mask.
         mask = np.zeros(img.shape[:-1], bool)
 
-        mask[indices] = True
+        mask[floor_indices] = True
+
+
 
         return mask
+
         
 
     
+def vertical_position_center_of_mass(indices):
+    
+    m_total = 0
+    rm_total = 0
+    for j in range(indices.shape[0]):
+        rm_total += np.sum(indices[j, :])*j
+        m_total += np.sum(indices[j, :])
 
-
+    return rm_total/m_total
   
 
     
