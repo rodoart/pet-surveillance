@@ -73,7 +73,7 @@ def test_floor_detection_overlays():
 
 def test_pet_detector():
   #if(motion_detector('test_video', 'data/VideoTests/test.mp4')):
-  setupCamera('file', r'data/VideoTests/test.mp4')
+  setupCamera('file', r'data/video/example_1.mp4')
 
 
 def test_numpy_arrays():
