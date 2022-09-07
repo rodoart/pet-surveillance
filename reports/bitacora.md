@@ -68,3 +68,6 @@ Se descubrió un problema con las imágenes "labels" del dataset unity, las imá
 
 
 
+
+
+
