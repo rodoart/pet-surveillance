@@ -144,27 +144,62 @@ def pet_detector(frame, floor, im_width, im_height, font, objectModel):
         limitxMin = int(((boxes[0][0][1]+boxes[0][0][1])/2)*im_width)
         limityMin = int(((boxes[0][0][1]+boxes[0][0][0])/2)*im_height)
 
+    
+
+
+
     # Check the class of the top detected object by looking at classes[0][0].
     # If the top detected object is a cat (17) or a dog (18) (or a teddy bear (88) for test purposes),
     # find its center coordinates by looking at the boxes[0][0] variable.
     # boxes[0][0] variable holds coordinates of detected objects as (ymin, xmin, ymax, xmax
     x = 0
     y = 0
+
     if (((int(classes[0][0]) == 17) or (int(classes[0][0] == 1) or (int(classes[0][0]) == 88))) and (pause == 0)):
-        x = int(((boxes[0][0][1]+boxes[0][0][3])/2)*im_width)
+
+        
+        x_no_rescaled = int(((boxes[0][0][1]+boxes[0][0][1])/2)*frame.shape[1])
+        y_no_rescaled = int(((boxes[0][0][0]+boxes[0][0][2])/2)*frame.shape[0])
+        x = int(((boxes[0][0][1]+boxes[0][0][1])/2)*im_width)
         y = int(((boxes[0][0][0]+boxes[0][0][2])/2)*im_height)
+
+
+        
 
         # Draw a circle at center of object
         cv2.circle(frame,(x,y), 5, (75,13,180), -1)
 
+        # Probability of the animal not in the floor.        
+        y_start = int(((boxes[0][0][1]+boxes[0][0][0])/2)*frame.shape[1])
+        y_stop = int(((boxes[0][0][1]+boxes[0][0][2])/2)*frame.shape[1])
+        x_start = int(((boxes[0][0][1]+boxes[0][0][1])/2)*frame.shape[0])
+        x_stop = int(((boxes[0][0][1]+boxes[0][0][3])/2)*frame.shape[0]) 
+        
+        floor_arround_center = floor[y_start:y_stop, x_start:x_stop]  
+
+        sum_floor = np.sum(floor_arround_center)
+        box_area = (y_stop-y_start)*(x_stop-x_start)
+        p_not_in_floor = 1-sum_floor/box_area
+
+
         # If object is in inside box, increment inside counter variable
-        if ((x >= limitxMin) and (y >= limityMin) and (y <= limityMax)):
+        if p_not_in_floor >= 0.85:
             inside_counter = inside_counter + 1
 
     # If pet has been detected inside for more than 10 frames, set detected_inside flag
-    if inside_counter > 10: 
-        cv2.putText(frame,'Pet is on the couch!',(int(im_width*.1),int(im_height*.5)),font,3,(0,0,0),7,cv2.LINE_AA)
-        inside_counter = 0
+    if inside_counter >= 5: 
+        cv2.putText(
+            img = frame, 
+            text='Pet has been on the couch!',
+            org =  (int(im_width*.1),int(im_height*.5)),
+            fontFace=font,
+            fontScale=1.5,
+            color=(0,0,255),
+            thickness=7,
+            lineType=cv2.LINE_AA
+        )
+
+        #inside_counter = 0
         # Pause pet detection by setting "pause" flag
         pause = 1
 
