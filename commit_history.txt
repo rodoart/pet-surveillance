@@ -1,0 +1,493 @@
+commit db76ae747d13353203e3933e8f6866d8ba65852a
+Merge: bf2853e 31bc96b
+Author: Rodolfo Arturo González Trillo <rodoart@ciencias.unam.mx>
+Date:   Thu Sep 22 11:32:31 2022 -0500
+
+    Merge pull request #4 from rodoart/detect_pet_on_floor
+    
+    Detect pet on floor
+
+commit bf2853eaaa13bd41932833f2b5ec02d6b190bba5
+Author: asdrubal-152 <59190830+asdrubal-152@users.noreply.github.com>
+Date:   Mon Sep 19 19:52:48 2022 -0500
+
+    entrega final
+    
+    Desarrollo para la entrega final.
+
+commit 31bc96b9ec181699b52fcacabf561b212da5be63
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Tue Sep 6 21:41:49 2022 -0500
+
+    Detection achieved with floor pixels/total pixels at the box.
+
+commit 690c7a1f123cce8d3529016f7152c271d68923f2
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 18:45:23 2022 -0500
+
+    First try to calculate probability to not to be at the floor
+
+commit 15f533edbda15ed4fdf92497eecb85b9f3aec3d0
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 17:52:00 2022 -0500
+
+    Solved a small problem with floor detection order
+
+commit 8a0771dc88f1a83a8980f5d334b5f960077f64ff
+Merge: 1a07182 760f34d
+Author: Rodolfo Arturo González Trillo <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 17:39:56 2022 -0500
+
+    Merge pull request #3 from rodoart/floor_detection_debug
+    
+    Floor detection debugged
+
+commit 760f34d3ae43b054ae804669de77336e9093bcd5
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 17:37:27 2022 -0500
+
+    Floor detection debugged
+
+commit 1a07182d69209e775e011bd6fc045641d570d672
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 16:10:54 2022 -0500
+
+    Changed setupCamera('file', r'data/video/example_1.mp4')
+
+commit 29c6b7dd86882b330f82dad992fe1066defd8b19
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 15:57:49 2022 -0500
+
+    Floor detection implemented in PetDetector.py but with some bugs.
+
+commit c4c0e58873584c81661ca5d8098f2423c42d85a9
+Merge: bdb90e5 9c79b63
+Author: Rodolfo Arturo González Trillo <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 14:35:51 2022 -0500
+
+    Merge pull request #2 from rodoart/floor_detector_attempt
+    
+    Better floor detection and overlay ready to pet_detector.py
+
+commit 9c79b6323d1716690de39f88090d4678920ca5b5
+Merge: c594574 bdb90e5
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 14:34:09 2022 -0500
+
+    Conflict resolution
+
+commit c59457449bb5197fc07b28b85e780d397b8267aa
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 14:18:14 2022 -0500
+
+    Submodules organized. Attempt to floor detection.
+
+commit a8d6567e09199e62e3d32f7deba6aae9f382c3e3
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Mon Sep 5 11:18:33 2022 -0500
+
+    Meanframe with some problems.
+
+commit bdb90e57bdae1a688ff9826bb5e07f4769f723c8
+Author: asdrubal-152 <37197740+asdrubal152@users.noreply.github.com>
+Date:   Sun Sep 4 15:31:44 2022 -0500
+
+    More cleaning and now it detects using tf objectde
+
+commit 10aa987a026458a256b94f4207484885f6a48432
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Sat Sep 3 01:50:51 2022 -0500
+
+    Better floor detection and overlay ready to pet_detector.py
+
+commit 23aba102d119d191f6b58c7d13f829a467c2f02b
+Merge: d3205ee ac66a45
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Fri Sep 2 18:42:25 2022 -0500
+
+    Merge branch 'master' of github.com:rodoart/pet-surveillance
+
+commit d3205ee2689240a49e67de664d91d4f788a8b2b2
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Sep 2 18:40:48 2022 -0500
+
+    Video at DVC
+
+commit ac66a45e4e0d89c86396d9a673aac7ba4ac35fdf
+Author: asdrubal-152 <37197740+asdrubal152@users.noreply.github.com>
+Date:   Thu Sep 1 18:48:24 2022 -0500
+
+    Changes to run detection
+
+commit 8f26dab72e7bd3bbae07029a6d461b17fc7b1fa3
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Tue Aug 30 16:17:35 2022 -0500
+
+    Now, segformer can use frames from cv2.VideoCapture as input.
+
+commit 2aa856464081d4a86555e4f248e7e5f65a8a9b96
+Author: asdrubal-152 <37197740+asdrubal152@users.noreply.github.com>
+Date:   Sun Aug 28 13:34:14 2022 -0500
+
+    Changes for pet detection
+
+commit cbb91097fbc6f1157a5fd997fe470909765ce72d
+Merge: 3683ca2 2aea350
+Author: asdrubal-152 <59190830+asdrubal-152@users.noreply.github.com>
+Date:   Fri Aug 26 17:43:05 2022 -0500
+
+    Merge branch 'master' of https://github.com/rodoart/pet-surveillance
+
+commit 3683ca21297ed752bc5c8d4c6f3dea5b9f2c96aa
+Author: asdrubal-152 <59190830+asdrubal-152@users.noreply.github.com>
+Date:   Fri Aug 26 17:43:01 2022 -0500
+
+    Update main.py
+
+commit 2aea3508470726abf00bfae53409f9d824d92491
+Merge: 954d875 03aa8ae
+Author: Rodolfo Arturo González Trillo <rodoart@ciencias.unam.mx>
+Date:   Thu Aug 25 02:34:38 2022 -0500
+
+    Merge pull request #1 from asdrubal-152/master
+    
+    Merging.
+
+commit 03aa8ae4e1d91719badbb902416d35d3b1e0d2bf
+Author: asdrubal-152 <asdrubal_152@hotmail.com>
+Date:   Wed Aug 24 11:42:05 2022 -0500
+
+    first commit
+
+commit 8fae442a43d862f8bf1c5af62870c1937ca5331c
+Author: asdrubal-152 <asdrubal_152@hotmail.com>
+Date:   Wed Aug 24 11:40:26 2022 -0500
+
+    motion detector in main
+
+commit 954d875386603b597800cc9b26aade442b5ac414
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Aug 22 19:52:49 2022 -0500
+
+    Sólo contiene Metodología e Implementación
+
+commit 115efde2cc6b2afc7343946c94e2a90c85fc15e7
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Mon Aug 22 19:51:03 2022 -0500
+
+    Correcciones menores.
+
+commit 1013a8dc48983ed7fcbad128cd4f4ff794e006c6
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Sun Aug 21 18:21:38 2022 -0500
+
+    Algunos parráfos para unir. Documento en pdf para entregar.
+
+commit 9831fe2fd2a89bc7f0634a63336279672cf06f26
+Author: Rodolfo Arturo González Trillo <rodoart@ciencias.unam.mx>
+Date:   Sat Aug 20 16:14:18 2022 -0500
+
+    Delete 0_1_vigilancia_mascotas_data_preparation.ipynb:Zone.Identifier
+
+commit 9ffa3751553f1e307dec695069930f6af6e2d9fd
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 19 22:33:06 2022 -0500
+
+    DVC, figures, minor correction.
+
+commit 6debfa099e015058d9813b62a44aa6344f0b613e
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 19 22:23:14 2022 -0500
+
+    SCRUM y LEAN. Revisión pendiente.
+
+commit b296437be1602194d4d5fba1b95bfc3c89633908
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Thu Aug 18 00:53:22 2022 -0500
+
+    Cambios en estructura del documento tex.
+
+commit fbacbcbe8ddad17eb176c45cf01675e3a99408c2
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 12 19:27:55 2022 -0500
+
+    Floor detection as a module
+
+commit b86461c3ef693a862cdc017f22e6e58c296335de
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Thu Aug 11 18:55:32 2022 -0500
+
+    SegFormer as module
+
+commit f6ab5d2de9f3091b1d9e8960024242d4ff73993d
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Wed Aug 10 20:06:33 2022 -0500
+
+    Some notebook corrections, preliminary to organize in modules
+
+commit 2f1ab81fd4e4743aae9224b91e8c43d084e89063
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Sat Aug 6 18:36:28 2022 +0000
+
+    Added raw data.
+
+commit e55711f777ba9e9a2f7c2479ab491f5424c3bdae
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Sat Aug 6 12:36:08 2022 -0500
+
+    Reformating notebooks and fixing data set creation. WIP.
+
+commit 82614ed44a323b83b6c0b3a5310ef88f3c218f04
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 16:36:04 2022 -0500
+
+    Used Segformer form Sithu31296 to predict labels from Unity.
+
+commit a1646e2297b964e39fac257050bd8d908df896c9
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 21:13:20 2022 +0000
+
+    Added predicted labels with Segform.
+
+commit b4290aa46c79ba41fa1a47e5019789f17fb43923
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 11:53:33 2022 -0500
+
+    Rearraging dvc files into smaller workable units
+
+commit e0979d55d8ca8d45ec64e83f9d8133c8c09f4ff3
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 10:30:54 2022 -0500
+
+    pdf to dvc.
+
+commit c22f5eb551606e8edc90cf9e0f019bb5a869907d
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 10:30:27 2022 -0500
+
+    Adding pdfs, fonts and figures to dvc
+
+commit 7138d62ed227e41000dba5103986b29af175afa6
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 10:25:18 2022 -0500
+
+    Figures dvc
+
+commit f8a0cfb31d064d232554debd345a894d4c090c7f
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 10:23:32 2022 -0500
+
+    stop tracking reports/figures
+
+commit 3324cf151704315484ae4bc12dd49c94a2bab5cd
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 10:18:55 2022 -0500
+
+    Successful example of semantic segmentation using sithu31296
+
+commit 49dc61e6a46350b9247c313aa4d2cd4223bc4b4f
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 09:59:12 2022 -0500
+
+    Dir renamed
+
+commit 8ae011f209efbafedab67604b39ea4a3f7d54f88
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 09:59:01 2022 -0500
+
+    Dir renamed
+
+commit 8adf3b6751967228cc7156d300519300bbbfd1e2
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 09:56:18 2022 -0500
+
+    Removed TwoDirPaths
+
+commit 08ab5e3f1b08768dca01445928b15e3988f97698
+Merge: cce99ff ad25c29
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 07:51:54 2022 -0500
+
+    Merge branch 'master' of github.com:rodoart/pet-surveillance
+    
+    Uploading dvc files and deleting redundant information.
+
+commit cce99ff68ff45afd4b7b68223f3356ad69362bcf
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 07:51:33 2022 -0500
+
+    Merged
+
+commit 9b7d49e13510c84d7d05534fdcf66a08ac07dfe8
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Aug 5 07:38:59 2022 -0500
+
+    Add DVC headers
+
+commit d0efe3df1ba00888629c544e8595158b7aa7574c
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Thu Aug 4 14:24:38 2022 -0500
+
+    Add DVC
+
+commit ad25c29d6aa595c7c55a6789227422075022725d
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Thu Aug 4 14:05:14 2022 -0500
+
+    Add DVC
+
+commit 923aaf5d572b681e7fb8ae06a01f9983436f9da4
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Wed Jul 20 17:01:08 2022 -0500
+
+    Some errors are fixed.
+
+commit 0300dcc7594624ee43a70124ed1945bc912bb2c8
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Mon Jul 18 19:32:23 2022 -0500
+
+    Desing Thinking
+
+commit f693a39d9020c8cb7fb55a7a2e5fd03cd652c60f
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Sun Jul 17 23:17:57 2022 -0500
+
+    Aún falta revisar el texto.
+
+commit 8df327056266d4cbf5e0ac87bb6f2e49b09686ef
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Sat Jul 16 18:50:12 2022 -0500
+
+    Función documentada.
+
+commit 457c157e91d461dd64841b4283cabd55cb45b2cb
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Jul 15 16:20:37 2022 -0500
+
+    Now fixes a problem with image labels.
+
+commit e3ea67c923f4abcc320e2a7277d426c94c9f12d1
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Thu Jul 14 16:03:36 2022 -0500
+
+    It can be used to download images on train test paths
+
+commit 524a3f5310052fb3fb588205fd0a53167d4e3f36
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Tue Jul 12 14:37:10 2022 -0500
+
+    Testing finished
+
+commit 4abf1088505eb3948408693dbef1cad4ec36c4d9
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Wed Jun 29 18:08:59 2022 -0500
+
+    Notebook nows download and moves the images.
+
+commit 8817ba69678842bef7dbc6eed12f25c9079cf290
+Author: rodoart <rodoart@ciencias.unam.mx>
+Date:   Fri Jun 24 18:01:41 2022 -0500
+
+    Termniado, se ha probado una red de segmentación semática.
+
+commit 3742ab4c112907c5d8112a4c9f67fff79c4fc3c4
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Thu Jun 23 12:01:17 2022 -0500
+
+    Archivos de requisitos adaptados a notebook semantic_segmentation
+
+commit 1103d7873488a1e66b6102d3f9c4d6c88508b84b
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Thu Jun 23 12:00:41 2022 -0500
+
+    Inicio de la bítacora.
+
+commit 449f8ae1b67bc23afc9d64925ed9bdcfbd2550f7
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Wed Jun 22 13:19:38 2022 -0500
+
+    Formato para subsubsubsection.
+
+commit 2775942b7c0e8b0f7ed03fd68c5b30a304e8ac85
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Tue Jun 21 15:09:47 2022 -0500
+
+    Semantic segmentation test
+
+commit c127511e9131b55f52383ad47030683c80f246d0
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Sun Jun 19 19:47:57 2022 -0500
+
+    Semantic segmentation test
+
+commit c40368e370533bed15849ee67e004bc9422a49c6
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Wed Jun 15 16:07:16 2022 -0500
+
+    Changes in pats and names.
+
+commit 38e93c0b7fadfaf63caa811ae6ffecf3ea5f248b
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Fri Jun 10 12:35:36 2022 -0500
+
+    Puntos en los números de la tabla de contenidos.
+
+commit 9663ffba4d4648b175e250a21c7a80ae14ca8f8a
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Fri Jun 10 12:24:32 2022 -0500
+
+    Número de página en 2.
+
+commit 22fa1653169dbe86b0fabaf3fbc414240f6bb405
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Fri Jun 10 12:16:17 2022 -0500
+
+    Formato tabla de contenido terminado.
+
+commit c924f6dfae70475fd6850f5069b14c24596960db
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Thu Jun 9 19:33:27 2022 -0500
+
+    Renamed cls file
+
+commit 5fc229f03ce03851d214a73cf0eef29f4f55018e
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Thu Jun 9 19:21:08 2022 -0500
+
+    Error en espaciado.
+
+commit ce575a8d9c08bf7ede0a734b1a9a7645d3568de7
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Thu Jun 9 19:13:28 2022 -0500
+
+    Cuadros de código y espaciado de caption.
+
+commit 3f1c72b3b2c639190215276a7c0d13d258e42b03
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Wed Jun 8 17:02:49 2022 -0500
+
+    Correcciones de etiquetas
+
+commit df05f52d4219cbb2160977c5d3eee986412ff1b8
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Wed Jun 8 16:46:45 2022 -0500
+
+    final version of format
+
+commit 3a8147cdc09d4c763ad51ee316ad5260a1aad0b4
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Tue Jun 7 22:59:25 2022 -0500
+
+    Portada terminada
+
+commit 405dac9c740205c0eda420159c902d159431f315
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Tue Jun 7 21:28:19 2022 -0500
+
+    Inicio del formato del documento, fuentes y portada a medias.
+
+commit c211d5b4780c258677eda8842710bd6762e08142
+Author: Rodolfo Gonzalez <rodoart@ciencias.unam.mx>
+Date:   Tue Jun 7 19:46:01 2022 -0500
+
+    Initial commit

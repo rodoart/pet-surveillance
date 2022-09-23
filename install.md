@@ -1,123 +1,71 @@
-# Trabajo de Innovación guide installation
+# Installation guide
 
 ## Prerequisites
 
-- [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html)
-- Optional [Mamba](https://mamba.readthedocs.io/en/latest/)
+- [Python 3.6 or higher](https://www.python.org/downloads/release/python-368/)
+- [Conda](https://docs.conda.io/en/latest/)  (Optional)
+- Protocol Buffer [Linux, Mac](https://grpc.io/docs/protoc-installation/#install-using-a-package-manager) or [Windows](https://medium.com/@dev.ashurai/protoc-protobuf-installation-on-windows-linux-mac-d70d5380489d). 
+- [OpenCV2](https://pypi.org/project/opencv-python/)
 
-## Create environment
 
-```bash
-conda env create -f environment.yml
-activate trabajo_final
-```
-
-or 
+## Clone the repository
 
 ```bash
-mamba env create -f environment.yml
-activate trabajo_final
+git clone https://github.com/rodoart/pet-surveillance
+cd pet-surveillance
 ```
 
-The packages necessary to run the project are now installed inside the conda environment.
+## Create and activate environment
 
-**Note: The following sections assume you are located in your conda environment.**
 
-## Set up project's module
-
-To move beyond notebook prototyping, all reusable code should go into the `trabajo_final/` folder package. To use that package inside your project, install the project's module in editable mode, so you can edit files in the `trabajo_final` folder and use the modules inside your notebooks :
+## Pip
 
 ```bash
-pip install --editable .
+python -m venv .env
 ```
 
-To use the module inside your notebooks, add `%autoreload` at the top of your notebook :
+Activate the environment:
 
-```python
-%load_ext autoreload
-%autoreload 2
+Linux:
+
+```bash
+source .env/bin/activate
 ```
 
-Example of module usage :
+Windows:
 
-```python
-from trabajo_final.utils.paths import data_dir
-data_dir()
+```bash
+.\.venv\Scripts\activate
 ```
 
-## Set up Git diff for notebooks and lab
-
-We use [nbdime](https://nbdime.readthedocs.io/en/stable/index.html) for diffing and merging Jupyter notebooks.
-
-To configure it to this git project :
+Download the libraries:
 
 ```
-nbdime config-git --enable
+pip install -r requirements.txt
 ```
 
-To enable notebook extension :
 
-```
-nbdime extensions --enable --sys-prefix
-```
+## or Conda
 
-Or, if you prefer full control, you can run the individual steps:
-
-```
-jupyter serverextension enable --py nbdime --sys-prefix
-
-jupyter nbextension install --py nbdime --sys-prefix
-jupyter nbextension enable --py nbdime --sys-prefix
-
-jupyter labextension install nbdime-jupyterlab
+```bash
+conda create -n pet_surveillance --file requirements.txt
+conda activate pet_surveillance
 ```
 
-You may need to rebuild the extension : `jupyter lab build`
+# Set up
 
-## Set up Plotly for Jupyterlab
+Compile `protoc`
 
-Plotly works in notebook but further steps are needed for it to work in Jupyterlab :
-
-* @jupyter-widgets/jupyterlab-manager # Jupyter widgets support
-* plotlywidget  # FigureWidget support
-* @jupyterlab/plotly-extension  # offline iplot support
-
-There are conflict versions between those extensions so check the [latest Plotly README](https://github.com/plotly/plotly.py#installation-of-plotlypy-version-3) to ensure you fetch the correct ones. 
-
-```
-jupyter labextension install @jupyter-widgets/jupyterlab-manager@0.36 --no-build
-jupyter labextension install plotlywidget@0.2.1  --no-build
-jupyter labextension install @jupyterlab/plotly-extension@0.16  --no-build
-jupyter lab build
+```bash
+protoc tensorflow/models/research/object_detection/protos/*.proto --python_out=.
 ```
 
-# Invoke command
+# Start
 
-We use [Invoke](http://www.pyinvoke.org/) to manage an
-unique entry point into all of the project tasks.
-
-List of all tasks for project :
+Run:
 
 ```
-$ invoke -l
+python main.py
+``` 
 
-Available tasks:
-
-  lab     Launch Jupyter lab
-```
-
-Help on a particular task :
-
-```
-$ invoke --help lab
-Usage: inv[oke] [--core-opts] notebook [--options] [other tasks here ...]
-
-Docstring:
-  Launch Jupyter lab
-
-Options:
-  -i STRING, --ip=STRING   IP to listen on, defaults to *
-  -p, --port               Port to listen on, defaults to 8888
-```
-
-You will find the definition of each task inside the `tasks.py` file, so you can add your own.
+The program automatically runs the example of the video downloaded before, if you want to capture usb with a camera in real time, you must modify the options in main.py.
