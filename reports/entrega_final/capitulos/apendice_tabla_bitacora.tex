@@ -28,6 +28,13 @@ Existen varias opciones pre-entrenadas de redes neuronales de Keras para la segm
 
 Se harán pruebas con las imágenes de \textcite{unity2022}.
 
+\subsection*{Deteccion mascota}
+
+\textbf{25-junio-2022 - Carlos}
+
+Se seleccioní la librería tensorflow para hacer la identificación automática de la mascota dentro de una imágen, para hacer las pruebas se tomarán vídeos de una camára en la sala de Carlos Alfaro, integrante del proyecto. S
+Se inicia la instalación y configuración de las librerías necesarias.
+
 \subsection*{Segmentación semántica - pruebas}
 
 \textbf{2-julio-2022 - Rodolfo}
@@ -37,7 +44,15 @@ A pesar de de convertir las imágenes exactamente al formato de entrada recomend
 Se probará con otras opciones posibles de segmentadores semánticos
 
 
+\subsection*{Problemas de instalación}
+
+\textbf{7-julio-2022 - Carlos}
+
+La instalación de las librerías llevó más tiempo del esperado debido a problemas con anaconda, se cambió el entorno local para usar visual studio con python 3 directamente.
+
+
 \subsection*{Desarrollo conceptual}
+
 
 \textbf{13-julio-2022 - Rodolfo}
 
@@ -60,7 +75,17 @@ La mejor red con fue la segunda con un valor de \textit{mean IU} = 0.043, aún a
 Se creó el modulo  \texttt{make\_dataset} para generar conjuntos de datos de prueba con \textcite{unity2022}.
 
 
-\subsection*{Segmentación semántica - SOTA}
+\subsection*{Desarrollo y primeras pruebas}
+
+\textbf{21-julio-2022 - Carlos}
+
+Se terminó de desarrollar el código para detección de perros ocupando el modelo estandar de tensorflow, se corrieron pruebas usando una imágen estática y la detección de objetos para detectar el sillón y corroborar si el área
+del cuadro de detección del perro está dentro del área del sillón, al no tener buenos resultados se cambió por un enfoque en el que el área de detección del perro rebase los límites inferior y laterales del
+cuadro de detección del sillón con resultados bastante positivos.
+
+
+\subsection*{Desarrollo conceptual}
+
 
 \textbf{1-agosto-2022 - Rodolfo}
 
@@ -90,6 +115,19 @@ Se creó el modulo \texttt{pet\_surveillance/models/segformer.py} que contiene u
 
 Se hizo una versión preliminar del detector de piso, en el que simplemente se elige el objeto segmentado de mayor tamaño y que además toca el borde inferior de la imagen.
 
+\subsection*{Video}
+
+\textbf{23-agosto-2022 - Carlos}
+
+Se desarrolló un método que permite utilizar vídeo, pasando las imágenes a los métodos de detección según sea necesario, también se agregó un método que toma las imágenes
+directamente desde la cámara web, de esta manera podemos hacer pruebas con vídeo estático o con un vídeo en tiempo real.
+
+\subsection*{Pruebas deteccion mascota}
+
+\textbf{1-septiembre-2022 - Carlos}
+
+Se ejecutaron pruebas finales sobre vídeo y los resultados son satisfactorios, el siguiente paso es introducir la detección de piso para garantizar una lectura correcta, ya que
+actualmente hay falsos positivos al tener al perro en el piso pero dentro de los límites inferiores y laterales del sillón.
 
 \subsection*{Detector de piso - pruebas}
 
