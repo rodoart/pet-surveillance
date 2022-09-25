@@ -1,0 +1,168 @@
+%------------------------------------------------------------------------------%
+\section{Anexo B. Tabla bítacora.}
+%------------------------------------------------------------------------------%
+
+
+\subsection*{Iniciando la bítacora}
+
+\textbf{23-junio-2022 - Rodolfo}
+
+
+\begin{itemize}
+    \item Hoy recibimos un correo electrónico con indicaciones para escribir una bítacora.
+    \item El proyecto ahora está en GitHub, desde ahí trabajaremos en equipo.
+    \item Actualmente reviso los temas de la Fase 2: \textit{Visual Thinking}.
+     También estoy configurando un notebook de prueba \texttt{semantic\_segmentation} para probar si este tipo de algoritmos funciona para nuestro propósito.
+\end{itemize}
+
+
+El proyecto se ha subido a GitHub y se sigue una estructura considerada estándar en ciencia de datos.
+
+\subsection*{Segmentación semántica}
+
+\textbf{23-junio-2022 - Rodolfo}
+
+Una parte importante del proyecto es la segmentación semántica automática para la detección del suelo.
+
+Existen varias opciones pre-entrenadas de redes neuronales de Keras para la segmentación semántica. Por ahora se está evaluando la de \textcite{gupta2022}.
+
+Se harán pruebas con las imágenes de \textcite{unity2022}.
+
+\subsection*{Segmentación semántica - pruebas}
+
+\textbf{2-julio-2022 - Rodolfo}
+
+A pesar de de convertir las imágenes exactamente al formato de entrada recomendado por \textcite{gupta2022} en todas las configuraciones, la precisión medida nunca supero el 0.25 y los resultados cualitativos son  deficientes, las imágenes resultantes están sobresegmentadas y no tienen coherencia.
+
+Se probará con otras opciones posibles de segmentadores semánticos
+
+
+\subsection*{Desarrollo conceptual}
+
+\textbf{13-julio-2022 - Rodolfo}
+
+Para tener una idea clara de desarrollo conceptual, se creo un prototipo de un gif animado de forma manual.
+
+\subsection*{Segmentación semántica - Otras alternativas}
+
+\textbf{14-julio-2022 - Rodolfo}
+
+En el archivo el notebook 01 se probaron con las imágenes de \textcite{unity2022} con las redes neuronales.
+
+\begin{itemize}
+    \item \texttt{pspnet\_50\_ADE\_20K}
+    \item \texttt{pspnet\_101\_ADE\_voc12}
+\end{itemize}
+
+La mejor red con fue la segunda con un valor de \textit{mean IU} = 0.043, aún así este resultado es ínfimo.
+
+
+Se creó el modulo  \texttt{make\_dataset} para generar conjuntos de datos de prueba con \textcite{unity2022}.
+
+
+\subsection*{Segmentación semántica - SOTA}
+
+\textbf{1-agosto-2022 - Rodolfo}
+
+Entre las librerías investigadas se probó mediante pruebas cualitativas con las imágenes del dataset que la mejor librería segmentando para nuestros propósitos es la de \textcite{aung2022}. Se está implementando métodos para fácil procesado las imágenes. 
+
+Esta red presenta la fuerte desventaja de que está programada en Torch, cuando las otras partes del proyecto están en Keras y que además es un poco engorrosa de instalar.
+
+
+\subsection*{SOTA - Segformer}
+
+\textbf{5-agosto-2022 - Rodolfo}
+
+Se probo SOTA con la configuración Segformer. Una red generalista preentrenada con imágenes de todo tipo en las imágenes de \textcite{unity2022}. Los resultados son muy aceptables de manera cualitativa. No es muy pesada en memoria. Y además identificó bien el suelo en todas las pruebas.
+
+
+
+\subsection*{SOTA - Segformer Implementación}
+
+\textbf{15-agosto-2022 - Rodolfo}
+
+Se creó el modulo \texttt{pet\_surveillance/models/segformer.py} que contiene un objeto que permite descargar e instalar las dependencias necesarias de \textcite{aung2022} y además carga el modulo y toma imágenes como entradas y devuelve la imagen de etiquetas
+
+
+\subsection*{Detector de piso}
+
+\textbf{17-agosto-2022 - Rodolfo}
+
+Se hizo una versión preliminar del detector de piso, en el que simplemente se elige el objeto segmentado de mayor tamaño y que además toca el borde inferior de la imagen.
+
+
+\subsection*{Detector de piso - pruebas}
+
+\textbf{6-septiembre-2022 - Rodolfo}
+
+Luego de probar con las imágenes del dataset se determinó que identificar el piso de la imagen como el segmento de mayor tamaño que toca el borde inferior es bueno en aproximadamente el 85\% de los casos. Se necesita mejorar la metodología de selección.
+
+\subsection*{Detector de piso - mejoras con probabilidad}
+
+\textbf{8-septiembre-2022 - Rodolfo}
+
+De forma empírica, se determinó una nueva estrategia para seleccionar el segmento que corresponde al piso.
+
+
+\begin{equation}
+    P_{\text{piso}} = p_\text{{inferior}}\ p_\text{{tamaño}} \ p_\text{{distribución \ vertical}}    
+\end{equation}
+
+\noindent donde:
+
+$p_\text{{inferior}} $ es la fracción de píxeles del objeto en el borde inferior respecto a $w$ ancho total de la imagen en píxeles y se define:
+
+\begin{equation}
+    p_\text{{inferior}} = \frac{\text{píxeles del objeto en el borde inferior}}{w}
+\end{equation}
+
+
+$p_\text{{tamaño}}$ Es la fracción de la suma total de píxeles del objeto respecto al área total de la imagen en píxeles, osea:
+
+\begin{equation}
+p_\text{{tamaño}} = \frac{A_{\text{objeto}}}{A_{\text{total}}}
+\end{equation}
+
+$p_\text{{distribución}}$ es la distribución vertical de la imagen o el componente vertical del centroide de los píxels respecto al alto de la imagen:
+
+
+
+\begin{equation}
+p_\text{{distribución}} = \frac{y_{\text{CM}}}{h}
+\end{equation}
+
+$y_{\text{CM}}$ es la componente vertical del calculo del centroide del objeto sobre la altura $h$ total de la imagen en píxeles. Entre más píxeles del objeto estén en la parte inferior, más bajo será su centroide.
+
+
+
+\begin{equation}
+    y_{\text{CM}} = \sum_{j=0}^{h-1}\frac{m_j \cdot (j+1)}{A_{\text{objeto}}}
+\end{equation}
+
+donde
+
+$j$ es la coordenada vertical de la matriz de la imagen, cada iteración de la suma está corriendo una línea de la imagen.
+
+$m_j$ es el total de píxeles en la línea $j$.
+
+
+El objeto con mayor $P_{\text{piso}}$ tiene mayor probabilidad de ser el piso. Las $p$s se calculan en el orden de la fórmula, realmente la única que puede ser 0 es la $p_\text{{inferior}}$ por lo que si esto pasa, el objeto queda descartado y ya no se calculan las otras. 
+
+Esto se programó como el método \texttt{Segformer.detect\_floor} del módulo \texttt{pet\_surveillance/models/segformer.py}, que devuelve una matriz booleana del tamaño de la imagen proporcionada, en la que los valores verdaderos representan el piso detectado.
+
+
+\subsection*{Detector de piso probabilístico mejorado.}
+
+\textbf{9-septiembre-2022 - Rodolfo}
+
+La nueva metodología detecta bien el piso en el $>95\%$ de los casos. 
+
+Se implementó la detección del piso dentro del programa de captura de vídeo. Se creó la función \texttt{boolean\_mask\_overlay} en \texttt{pet\_surveillance/utils/video\_layers.py} .
+
+\subsection*{Intersección del animal con el piso.}
+\textbf{11-septiembre-2022 - Rodolfo}
+
+Los métodos de detección de animales empleados en el análisis de vídeo ponen una caja al rededor de la mascota. Se detecta la intersección de píxeles de suelo con la caja. Si esta es muy baja, significa que el animal no está en el suelo.
+
+
+

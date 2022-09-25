@@ -112,10 +112,13 @@ target/
 # Models
 *.pth
 
+
+# Media files
 *.jpg
 *.gif
 *.svg
 *.json
+*.avi
 
 
 # DVC
@@ -129,4 +132,5 @@ data/raw/dataset1
 
 # Latex
 /.texlive/
+
 

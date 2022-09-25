@@ -93,13 +93,51 @@ En la \tabla{tab:sprints} se puede apreciar a detalle la planificación del proy
 
 \subsection{Prototipo}
 
-El prototipo del proyecto se puede encontrar en el repositorio de \footnote{Aún no está disponible para instalar, estará disponible en los próximos días}:
+El prototipo del proyecto se puede encontrar en el repositorio de:
 
 \begin{quotebox}
     \href{https://github.com/rodoart/pet-surveillance}{https://github.com/rodoart/pet-surveillance}
 \end{quotebox}    
 
-El prototipo sigue el diagrama de la \figura{fig:funcionamiento}. La fase de procesamiento está explicada en la \figura{fig:mascotas}.
+El prototipo sigue el diagrama de la \figura{fig:funcionamiento}. 
+
+\subsubsection{Descripción técnica}
+
+De manera técnica el prototipo sigue la  \figura{fig:mascotas}. A continuación haremos una descripción breve de cómo su programación y funcionamiento.
+
+Los requisitos para poder ejecutar el prototipo son:
+
+\begin{itemize}
+    \item Python 3.7
+    \item TensorFlow
+    \item Keras, para la red que detecta a las mascotas, las etiqueta, y genera cajas.
+    \item Torch, para la red que realiza la segmentación semántica de la habitación.
+    \item OpenCV2, para el procesamiento de imágenes y vídeo.
+    \item GitHub, para el manejo de versiones.
+    \item DVC, para el manejo de conjuntos de datos y archivos no binarios.
+\end{itemize}
+
+El programa puede cargar un vídeo desde un archivo de formato común —.mp4, .mpeg, etc— o conectarse a una cámara usb. Tanto la cámara como el vídeo deben ser grabados de forma estática, horizontal, con el suelo bien descubierto y ocupando al menos una quinta parte del cuadro. El marco de trabajo que se uso para esta funcionalidad se obtuvo de \textcite{juras2018}.
+
+En la \figura{fig:mascotas} se aprecia que el programa tiene dos procesos principales: detectar el suelo y detectar y encuadrar a la mascota. 
+
+El primer proceso —detectar el suelo— se realiza tomando el promedio de los primeros cuadros del vídeo, y obteniendo una imagen de fondo en la cual se realiza segmentación semántica —división en zonas por características comunes— utilizando una red neurona convolucional doble pre-entrenada. Para este proyecto se utilizó la de \textcite{aung2022} que tiene la opción de utilizar múltiples modelos pre-entrenados con distintas bases de datos.
+
+El resultado de la segmentación semántica se aprecia en \figura{fig:segmentacion}, una imagen separada por regiones con características similares representadas por un color uniforme. Estas regiones no están etiquetadas, por lo que se determina cual corresponde al suelo mediante estadística, bajo las hipótesis de que una región que es grande, que comparte mucho borde con el borde inferior de la imagen  y que es aquella que tiene su centroide más bajo. 
+
+\begin{figure}
+    \centering
+    \caption[Ejemplo de segmentación.]{Ejemplo de imagen segmentada: a la \textit{izquierda} la imagen original, a la \textit{derecha} la imagen segmentada.} 
+    \label{fig:segmentacion}
+    \includegraphics[width=\linewidth]{semantic_segmentation_example.png}
+    \source{La imagen original es del \textit{dataset} \figurecite{unity2022} y  la imagen procesada de procesó usando \figurecite{unity2022}}
+\end{figure}
+
+El segundo proceso es detectar, etiquetar y delimitar a los animales en una frontera rectangular. Esto se ha realizado con las librerías de detección de objetos de \textcite{tensorflow2022}.
+
+
+Los proceso convergen para identificar cuando el animal se está subiendo a los muebles. Se mide que tanta fracción del rectángulo del animal interseca el suelo, si esta es menor que el 15\% durante aproximadamente 5s, se considera que el perro ya no está en el suelo y debería estar en los muebles. Emitiendo una alarma, que en el prototipo se trata sólo de un mensaje visual, pero en futuras versiones debería emitir un sonido molesto para el animal.
+
 
 \begin{figure}
     \centering
