@@ -1,0 +1,232 @@
+%------------------------------------------------------------------------------%
+\addcontentsline{toc}{section}{Anexo C. Evaluación de Asistencia y bitácora}
+\section*{Anexo C. Evaluación de Asistencia y bitácora}
+%------------------------------------------------------------------------------%
+
+\subsection*{Sesiones con asistencia}
+
+\begin{itemize}
+    \item 14 de jun, 18:00 - 19:00.
+    \item 28 de jun, 18:00 - 19:00.
+    \item 29 de jul, 18:00 - 19:00.
+\end{itemize}
+
+
+
+\subsection*{Problemas encontrados durante la realización del proyecto}
+
+En la bitácora \hyperref[sec:bitacora]{bitácora} se describe con detalle los problemas que surgieron durante la elaboración de este proyecto. Se resumen en:
+
+\begin{itemize}
+    \item Los segmentadores semánticos de \textcite{gupta2022}, basados en Keras, no funcionaron. Se cambiaron a \textcite{aung2022}.
+    \item Determinar el suelo de una imagen segmentada no fue tan sencillo como se pensaría, se tuvo que recurrir a un método probabilístico y a conceptos físicos.
+    \item El capturador de vídeo en tiempo real no trabajaba en WSL, se tuvo que cambiar todas las dependencias a Windows.
+    \item Se subieron archivos binarios a GitHub y esto produjo sincronizaciones extremadamente lentas, se utilizó WSL para manejar estos archivos en Google Drive.
+    \item El programa original no corría porque cargaba los modelos en cada frame. Se cambió a que se carguen los modelos una vez al iniciar la ejecución. 
+\end{itemize}
+
+
+
+
+\subsection*{Iniciando la bitácora}
+\label{sec:bitacora}
+
+\textbf{23-junio-2022 - Rodolfo}
+
+
+\begin{itemize}
+    \item Hoy recibimos un correo electrónico con indicaciones para escribir una bítacora.
+    \item El proyecto ahora está en GitHub, desde ahí trabajaremos en equipo.
+    \item Actualmente reviso los temas de la Fase 2: \textit{Visual Thinking}.
+     También estoy configurando un notebook de prueba \texttt{semantic\_segmentation} para probar si este tipo de algoritmos funciona para nuestro propósito.
+\end{itemize}
+
+
+El proyecto se ha subido a GitHub y se sigue una estructura considerada estándar en ciencia de datos.
+
+\subsection*{Segmentación semántica}
+
+\textbf{23-junio-2022 - Rodolfo}
+
+Una parte importante del proyecto es la segmentación semántica automática para la detección del suelo.
+
+Existen varias opciones pre-entrenadas de redes neuronales de Keras para la segmentación semántica. Por ahora se está evaluando la de \textcite{gupta2022}.
+
+Se harán pruebas con las imágenes de \textcite{unity2022}.
+
+\subsection*{Deteccion mascota}
+
+\textbf{25-junio-2022 - Carlos}
+
+Se seleccioní la librería tensorflow para hacer la identificación automática de la mascota dentro de una imágen, para hacer las pruebas se tomarán vídeos de una camára en la sala de Carlos Alfaro, integrante del proyecto. S
+Se inicia la instalación y configuración de las librerías necesarias.
+
+\subsection*{Segmentación semántica - pruebas}
+
+\textbf{2-julio-2022 - Rodolfo}
+
+A pesar de de convertir las imágenes exactamente al formato de entrada recomendado por \textcite{gupta2022} en todas las configuraciones, la precisión medida nunca supero el 0.25 y los resultados cualitativos son  deficientes, las imágenes resultantes están sobresegmentadas y no tienen coherencia.
+
+Se probará con otras opciones posibles de segmentadores semánticos
+
+
+\subsection*{Problemas de instalación}
+
+\textbf{7-julio-2022 - Carlos}
+
+La instalación de las librerías llevó más tiempo del esperado debido a problemas con anaconda, se cambió el entorno local para usar visual studio con python 3 directamente.
+
+
+\subsection*{Desarrollo conceptual}
+
+
+\textbf{13-julio-2022 - Rodolfo}
+
+Para tener una idea clara de desarrollo conceptual, se creo un prototipo de un gif animado de forma manual.
+
+\subsection*{Segmentación semántica - Otras alternativas}
+
+\textbf{14-julio-2022 - Rodolfo}
+
+En el archivo el notebook 01 se probaron con las imágenes de \textcite{unity2022} con las redes neuronales.
+
+\begin{itemize}
+    \item \texttt{pspnet\_50\_ADE\_20K}
+    \item \texttt{pspnet\_101\_ADE\_voc12}
+\end{itemize}
+
+La mejor red con fue la segunda con un valor de \textit{mean IU} = 0.043, aún así este resultado es ínfimo.
+
+
+Se creó el modulo  \texttt{make\_dataset} para generar conjuntos de datos de prueba con \textcite{unity2022}.
+
+
+\subsection*{Desarrollo y primeras pruebas}
+
+\textbf{21-julio-2022 - Carlos}
+
+Se terminó de desarrollar el código para detección de perros ocupando el modelo estandar de tensorflow, se corrieron pruebas usando una imágen estática y la detección de objetos para detectar el sillón y corroborar si el área
+del cuadro de detección del perro está dentro del área del sillón, al no tener buenos resultados se cambió por un enfoque en el que el área de detección del perro rebase los límites inferior y laterales del
+cuadro de detección del sillón con resultados bastante positivos.
+
+
+\subsection*{Desarrollo conceptual}
+
+
+\textbf{1-agosto-2022 - Rodolfo}
+
+Entre las librerías investigadas se probó mediante pruebas cualitativas con las imágenes del dataset que la mejor librería segmentando para nuestros propósitos es la de \textcite{aung2022}. Se está implementando métodos para fácil procesado las imágenes. 
+
+Esta red presenta la fuerte desventaja de que está programada en Torch, cuando las otras partes del proyecto están en Keras y que además es un poco engorrosa de instalar.
+
+
+\subsection*{SOTA - Segformer}
+
+\textbf{5-agosto-2022 - Rodolfo}
+
+Se probo SOTA con la configuración Segformer. Una red generalista preentrenada con imágenes de todo tipo en las imágenes de \textcite{unity2022}. Los resultados son muy aceptables de manera cualitativa. No es muy pesada en memoria. Y además identificó bien el suelo en todas las pruebas.
+
+
+
+\subsection*{SOTA - Segformer Implementación}
+
+\textbf{15-agosto-2022 - Rodolfo}
+
+Se creó el modulo \texttt{pet\_surveillance/models/segformer.py} que contiene un objeto que permite descargar e instalar las dependencias necesarias de \textcite{aung2022} y además carga el modulo y toma imágenes como entradas y devuelve la imagen de etiquetas
+
+
+\subsection*{Detector de piso}
+
+\textbf{17-agosto-2022 - Rodolfo}
+
+Se hizo una versión preliminar del detector de piso, en el que simplemente se elige el objeto segmentado de mayor tamaño y que además toca el borde inferior de la imagen.
+
+\subsection*{Video}
+
+\textbf{23-agosto-2022 - Carlos}
+
+Se desarrolló un método que permite utilizar vídeo, pasando las imágenes a los métodos de detección según sea necesario, también se agregó un método que toma las imágenes
+directamente desde la cámara web, de esta manera podemos hacer pruebas con vídeo estático o con un vídeo en tiempo real.
+
+\subsection*{Pruebas deteccion mascota}
+
+\textbf{1-septiembre-2022 - Carlos}
+
+Se ejecutaron pruebas finales sobre vídeo y los resultados son satisfactorios, el siguiente paso es introducir la detección de piso para garantizar una lectura correcta, ya que
+actualmente hay falsos positivos al tener al perro en el piso pero dentro de los límites inferiores y laterales del sillón.
+
+\subsection*{Detector de piso - pruebas}
+
+\textbf{6-septiembre-2022 - Rodolfo}
+
+Luego de probar con las imágenes del dataset se determinó que identificar el piso de la imagen como el segmento de mayor tamaño que toca el borde inferior es bueno en aproximadamente el 85\% de los casos. Se necesita mejorar la metodología de selección.
+
+\subsection*{Detector de piso - mejoras con probabilidad}
+
+\textbf{8-septiembre-2022 - Rodolfo}
+
+De forma empírica, se determinó una nueva estrategia para seleccionar el segmento que corresponde al piso.
+
+
+\begin{equation}
+    P_{\text{piso}} = p_\text{{inferior}}\ p_\text{{tamaño}} \ p_\text{{distribución \ vertical}}    
+\end{equation}
+
+\noindent donde:
+
+$p_\text{{inferior}} $ es la fracción de píxeles del objeto en el borde inferior respecto a $w$ ancho total de la imagen en píxeles y se define:
+
+\begin{equation}
+    p_\text{{inferior}} = \frac{\text{píxeles del objeto en el borde inferior}}{w}
+\end{equation}
+
+
+$p_\text{{tamaño}}$ Es la fracción de la suma total de píxeles del objeto respecto al área total de la imagen en píxeles, osea:
+
+\begin{equation}
+p_\text{{tamaño}} = \frac{A_{\text{objeto}}}{A_{\text{total}}}
+\end{equation}
+
+$p_\text{{distribución}}$ es la distribución vertical de la imagen o el componente vertical del centroide de los píxels respecto al alto de la imagen:
+
+
+
+\begin{equation}
+p_\text{{distribución}} = \frac{y_{\text{CM}}}{h}
+\end{equation}
+
+$y_{\text{CM}}$ es la componente vertical del calculo del centroide del objeto sobre la altura $h$ total de la imagen en píxeles. Entre más píxeles del objeto estén en la parte inferior, más bajo será su centroide.
+
+
+
+\begin{equation}
+    y_{\text{CM}} = \sum_{j=0}^{h-1}\frac{m_j \cdot (j+1)}{A_{\text{objeto}}}
+\end{equation}
+
+donde
+
+$j$ es la coordenada vertical de la matriz de la imagen, cada iteración de la suma está corriendo una línea de la imagen.
+
+$m_j$ es el total de píxeles en la línea $j$.
+
+
+El objeto con mayor $P_{\text{piso}}$ tiene mayor probabilidad de ser el piso. Las $p$s se calculan en el orden de la fórmula, realmente la única que puede ser 0 es la $p_\text{{inferior}}$ por lo que si esto pasa, el objeto queda descartado y ya no se calculan las otras. 
+
+Esto se programó como el método \texttt{Segformer.detect\_floor} del módulo \texttt{pet\_surveillance/models/segformer.py}, que devuelve una matriz booleana del tamaño de la imagen proporcionada, en la que los valores verdaderos representan el piso detectado.
+
+
+\subsection*{Detector de piso probabilístico mejorado.}
+
+\textbf{9-septiembre-2022 - Rodolfo}
+
+La nueva metodología detecta bien el piso en el $>95\%$ de los casos. 
+
+Se implementó la detección del piso dentro del programa de captura de vídeo. Se creó la función \texttt{boolean\_mask\_overlay} en \texttt{pet\_surveillance/utils/video\_layers.py} .
+
+\subsection*{Intersección del animal con el piso.}
+\textbf{11-septiembre-2022 - Rodolfo}
+
+Los métodos de detección de animales empleados en el análisis de vídeo ponen una caja al rededor de la mascota. Se detecta la intersección de píxeles de suelo con la caja. Si esta es muy baja, significa que el animal no está en el suelo.
+
+
+
