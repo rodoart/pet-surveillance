@@ -1,10 +1,35 @@
 %------------------------------------------------------------------------------%
-\addcontentsline{toc}{section}{Anexo C. Bítacora}
-\section*{Anexo C. Tabla bítacora}
+\addcontentsline{toc}{section}{Anexo C. Evaluación de Asistencia y bitácora}
+\section*{Anexo C. Evaluación de Asistencia y bitácora}
 %------------------------------------------------------------------------------%
 
+\subsection*{Sesiones con asistencia}
 
-\subsection*{Iniciando la bítacora}
+\begin{itemize}
+    \item 14 de jun, 18:00 - 19:00.
+    \item 28 de jun, 18:00 - 19:00.
+    \item 29 de jul, 18:00 - 19:00.
+\end{itemize}
+
+
+
+\subsection*{Problemas encontrados durante la realización del proyecto}
+
+En la bitácora \hyperref[sec:bitacora]{bitácora} se describe con detalle los problemas que surgieron durante la elaboración de este proyecto. Se resumen en:
+
+\begin{itemize}
+    \item Los segmentadores semánticos de \textcite{gupta2022}, basados en Keras, no funcionaron. Se cambiaron a \textcite{aung2022}.
+    \item Determinar el suelo de una imagen segmentada no fue tan sencillo como se pensaría, se tuvo que recurrir a un método probabilístico y a conceptos físicos.
+    \item El capturador de vídeo en tiempo real no trabajaba en WSL, se tuvo que cambiar todas las dependencias a Windows.
+    \item Se subieron archivos binarios a GitHub y esto produjo sincronizaciones extremadamente lentas, se utilizó WSL para manejar estos archivos en Google Drive.
+    \item El programa original no corría porque cargaba los modelos en cada frame. Se cambió a que se carguen los modelos una vez al iniciar la ejecución. 
+\end{itemize}
+
+
+
+
+\subsection*{Iniciando la bitácora}
+\label{sec:bitacora}
 
 \textbf{23-junio-2022 - Rodolfo}
 
